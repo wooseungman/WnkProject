@@ -39,4 +39,9 @@ public class WNKSampleController {
 		model.put("PAGE", paramMap.get("PAGE"));
 		model.put("LIST_TOT_COUNT", paramMap.get("LIST_TOT_COUNT"));
 	}
+	
+	@RequestMapping(value = "/sample/test.mvc")
+	public void test(@RequestParam Map<String,Object> paramMap, ModelMap model) {
+		
+	}
 }
