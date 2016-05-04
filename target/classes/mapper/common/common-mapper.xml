@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="common">
+    
+    <select id="mysql_beforePaging">
+    </select>
+    
+    <select id="mysql_afterPaging">
+    	LIMIT START_INDEX AND END_INDEX
+    </select>
+
+	<select id="mysql_berforeCounter">
+	</select>
+	
+	<select id="mysql_afterCounter">
+	</select>
+	
+</mapper>
