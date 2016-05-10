@@ -16,11 +16,11 @@
 	<td align="center">
 		총 게시물 : ${LIST_TOT_COUNT} / 페이지 : ${page}
 		<form id="frm" name="searchForm" method="get" action="">
-		<select id="SEARCH_GUBUN">
+		<select id="SEARCH_GUBUN" name="SEARCH_GUBUN">
 			<option value="">전체</option>
-			<option value="ID">ID</option>
+			<option value="ID" <c:if test="${param.SEARCH_GUBUN eq 'ID'}">selected</c:if>>ID</option>
 		</select>
-		<input type="text" name="SEARCH_VALUE" value="">
+		<input type="text" name="SEARCH_VALUE" value="${param.SEARCH_VALUE}">
 		<button value="submit">검색</button>
 		</form>
 		<table cellpadding="1" cellspacing="1" border="0" width="95%" bgcolor="#CCCCCC">
