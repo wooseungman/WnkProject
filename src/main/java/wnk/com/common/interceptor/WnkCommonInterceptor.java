@@ -13,10 +13,8 @@ public class WnkCommonInterceptor extends HandlerInterceptorAdapter {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		System.out.println("************************** Interceptor preHandle START *******************************");
 		if (request instanceof MultipartHttpServletRequest) 
 			RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
-		System.out.println("************************** Interceptor preHandle END *******************************");
 		return true;
 	}
 	
