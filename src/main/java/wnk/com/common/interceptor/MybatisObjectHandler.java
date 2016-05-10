@@ -15,7 +15,6 @@ public class MybatisObjectHandler extends BaseTypeHandler<Object> {
 
 	@Override
 	public void setParameter(PreparedStatement ps, int i, Object parameter, JdbcType jdbcType) throws SQLException {
-		System.out.println("setParameter START!!!!!!");
 		String value = (String) parameter;
 		if (value != null) {
 			 CLOB clob = CLOB.createTemporary(ps.getConnection(), true, CLOB.DURATION_SESSION);
