@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.ibatis.plugin.Intercepts;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.plugin.Invocation;
@@ -18,6 +20,8 @@ import org.apache.ibatis.reflection.factory.DefaultObjectFactory;
 import org.apache.ibatis.reflection.wrapper.DefaultObjectWrapperFactory;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.RowBounds;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 @SuppressWarnings("unchecked")
 @Intercepts({ @Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class }) })
@@ -25,8 +29,12 @@ public class PaginationInterceptor  implements Interceptor {
 	
     public Object intercept(Invocation invocation) throws Throwable {
     	
+    	ServletRequestAttributes requestAttributes = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes());
+        HttpServletRequest request = requestAttributes.getRequest();
+    	
     	StatementHandler handler = (StatementHandler)invocation.getTarget();
     	Map<String,Object> paramMap = (Map<String, Object>) (handler.getParameterHandler().getParameterObject() != null ? handler.getParameterHandler().getParameterObject() : "");
+    	System.out.println("paramMap : " + paramMap.toString());
     	StatementHandler statementHandler = (StatementHandler) invocation.getTarget();
 		MetaObject metaStatementHandler =  MetaObject.forObject(statementHandler, new DefaultObjectFactory(), new DefaultObjectWrapperFactory());
 		Configuration configuration = (Configuration)metaStatementHandler.getValue("delegate.configuration");
@@ -78,10 +86,20 @@ public class PaginationInterceptor  implements Interceptor {
 		
 		try{
 			countSql.append("SELECT COUNT(1) TOTAL_ROWS_COUNT FROM (").append(sql).append(") AUTO_COUNT");
+			
+			System.out.println("countSql : " + countSql);
+			
 			Connection connection = (Connection) invocation.getArgs()[0];
 			countStmt = connection.prepareStatement(countSql.toString());
-			//rs = countStmt.executeQuery();
-			//if (rs.next()) paramMap.put("LIST_TOT_COUNT", rs.getInt(1)); 
+			rs = countStmt.executeQuery();
+			if (rs.next()){
+				System.out.println("rs.getInt(1) : "  + rs.getInt(1));
+				paramMap.put("LIST_TOT_COUNT", rs.getInt(1));
+				request.setAttribute("LIST_TOT_COUNT", rs.getInt(1));
+				
+				System.out.println("paramMap : " + paramMap.get("LIST_TOT_COUNT"));
+				System.out.println("LIST_TOT_COUNT : " + request.getAttribute("LIST_TOT_COUNT"));
+			}
 		}catch(Exception e){
 			throw new Exception();
 		}finally{

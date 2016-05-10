@@ -28,16 +28,12 @@ public class WNKSampleController {
 	
 	@RequestMapping(value = "/sample/sampleBoard/boardList.mvc")
 	public void sampleBoardList(Map<String,Object> paramMap, ModelMap model) {
-		
+		model.put("list", service.getPagedList(paramMap));
 		Iterator<String> itr = paramMap.keySet().iterator();
 		while(itr.hasNext()){
 			String key = itr.next();
 			System.out.println("key : " + key + " || " + paramMap.get(key));
 		}
-		
-		model.put("list", service.getPagedList(paramMap));
-		model.put("PAGE", paramMap.get("PAGE"));
-		model.put("LIST_TOT_COUNT", paramMap.get("LIST_TOT_COUNT"));
 	}
 	
 }

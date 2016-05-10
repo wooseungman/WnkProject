@@ -3,6 +3,7 @@
 <%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn"  uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="app" uri="/WEB-INF/tld/jstl/app.tld"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -13,7 +14,7 @@
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <tr>
 	<td align="center">
-		총 개시물 : <c:out value="${LIST_TOT_COUNT}" /> / 페이지 : <c:out value="PAGE" />
+		총 게시물 : ${LIST_TOT_COUNT} / 페이지 : ${page}
 		<form id="frm" name="searchForm" method="get" action="">
 		<select id="SEARCH_GUBUN">
 			<option value="">전체</option>
@@ -40,6 +41,7 @@
 		</tr>
 		</c:forEach>
 		</table>
+		<app:paging />
 	</td>
 </tr>
 <tr>
