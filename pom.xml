@@ -92,6 +92,22 @@
 			<artifactId>spring-tx</artifactId>
 			<version>${spring-framework.version}</version>
 		</dependency>
+		
+		<!-- Spring Proxy Class -->
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>3.2.2</version>
+		</dependency>
+		
+		<!-- SQL Sort  -->
+		<dependency>
+    		<groupId>org.lazyluke</groupId>
+    		<artifactId>log4jdbc-remix</artifactId>
+    		<version>0.2.7</version>
+		</dependency>
+		
+		
 
 		<!-- Logging with SLF4J & LogBack -->
 		<dependency>
@@ -173,9 +189,9 @@
 	<!-- Oracle Jdbc repository -->
 	<repositories>
 		<repository>
-			<id>Oracle JDBC</id>
-			<name>ORACLE JDBC Repository</name>
-			<url>http://mesir.googlecode.com/svn/trunk/mavenrepo</url>
+    		<id>mesir-repo</id>
+    		<name>ORACLE JDBC Repository</name>
+    		<url>http://mesir.googlecode.com/svn/trunk/mavenrepo</url>
 		</repository>
 	</repositories>
 

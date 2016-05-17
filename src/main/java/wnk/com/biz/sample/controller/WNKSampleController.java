@@ -17,6 +17,9 @@ import wnk.com.biz.sample.service.WNKSampleService;
 @Controller
 public class WNKSampleController {
 	
+	@Value("#{app['page.size']}")
+	private int test;
+	
 	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(WNKSampleController.class);
 	
@@ -29,10 +32,6 @@ public class WNKSampleController {
 	
 	@RequestMapping(value = "/sample/sampleBoard/boardList.mvc")
 	public void sampleBoardList(Map<String,Object> paramMap, ModelMap model) {
-		System.out.println("*******************************************************");
-		System.out.println("*******************************************************");
-		
-		
 		
 		model.put("list", service.getPagedList(paramMap));
 		Iterator<String> itr = paramMap.keySet().iterator();
