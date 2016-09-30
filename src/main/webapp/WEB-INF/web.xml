@@ -41,6 +41,10 @@
 	</filter-mapping>
 	
 	<!-- sitemesh -->
+	<context-param>
+		<param-name>sitemesh.configfile</param-name>
+		<param-value>/WEB-INF/sitemesh/sitemesh.xml</param-value>
+	</context-param>
 	<filter>
     	<filter-name>sitemesh</filter-name>
     	<filter-class>com.opensymphony.module.sitemesh.filter.PageFilter</filter-class>
