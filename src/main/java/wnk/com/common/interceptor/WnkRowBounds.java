@@ -17,11 +17,8 @@ public class WnkRowBounds extends RowBounds{
 		ServletRequestAttributes requestAttributes = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes());
         HttpServletRequest request = requestAttributes.getRequest();
         
-        if(request.getParameter("ROW_OFF_SET") != null && !request.getParameter("ROW_OFF_SET").equals(""))
-        	ROW_OFF_SET = Integer.parseInt(request.getParameter("ROW_OFF_SET"));
-        
-        if(request.getParameter("PAGE") != null && !request.getParameter("PAGE").equals("")) 
-        	ROW_LIMIT = Integer.parseInt(request.getParameter("PAGE"));
+        if(request.getParameter("page") != null && !request.getParameter("page").equals("")) 
+        	ROW_LIMIT = Integer.parseInt(request.getParameter("page"));
         else 
         	ROW_LIMIT = 1;
 		

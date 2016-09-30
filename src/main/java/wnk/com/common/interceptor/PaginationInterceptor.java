@@ -62,6 +62,15 @@ public class PaginationInterceptor  implements Interceptor {
 		
 		int StartNumber = rowBounds.getOffset() * (rowBounds.getLimit() -1);
 		int	EndNumber = rowBounds.getOffset() * (rowBounds.getLimit());
+		
+		System.out.println("*****************************************************");
+		System.out.println("rowBounds.getLimit() : " + rowBounds.getLimit());
+		System.out.println("rowBounds.getOffset() : " + rowBounds.getLimit());
+		System.out.println("StartNumber : " + StartNumber);
+		System.out.println("EndNumber : " + EndNumber);
+		System.out.println("*****************************************************");
+		
+		
 		if(configuration.getDatabaseId().equals("MySQL")){
 			pagingSql.append("SELECT NONPAGINATEDLIST.* FROM (");
 			pagingSql.append(sql);
