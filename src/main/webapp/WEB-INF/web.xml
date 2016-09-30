@@ -40,6 +40,18 @@
 		<url-pattern>*.mvc</url-pattern>
 	</filter-mapping>
 	
+	<!-- common jsp -->
+	<jsp-config>
+		<jsp-property-group>
+			<url-pattern>*.jsp</url-pattern>
+			<include-prelude>/WEB-INF/view/common/default.jspf</include-prelude>
+		</jsp-property-group>
+		<jsp-property-group>
+			<url-pattern>*.jsp</url-pattern>
+			<el-ignored>false</el-ignored>
+		</jsp-property-group>
+	</jsp-config>
+	
 	<!-- sitemesh -->
 	<context-param>
 		<param-name>sitemesh.configfile</param-name>
