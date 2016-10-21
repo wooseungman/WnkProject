@@ -12,6 +12,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import wnk.com.biz.common.util.WnkMessage;
 import wnk.com.biz.sample.service.WNKSampleService;
 
 @Controller
@@ -23,11 +24,11 @@ public class WNKSampleController {
 	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(WNKSampleController.class);
 	
-	@Autowired WNKSampleService service;
+	@Autowired private WNKSampleService service;
 	
 	@RequestMapping(value = "/sample/sampleMain.mvc")
 	public void sampleMain(@RequestParam Map<String,Object> paramMap, ModelMap model) {
-	
+		System.out.println("www : " + WnkMessage.getMessage("hello"));
 	}
 	
 	@RequestMapping(value = "/sample/sampleBoard/boardList.mvc")

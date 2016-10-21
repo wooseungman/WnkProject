@@ -13,25 +13,54 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
 
-    <context:component-scan base-package="wnk.com.biz" use-default-filters="false">
+	<context:component-scan base-package="wnk.com.biz" use-default-filters="false">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
+	
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames" value="message/messages"/>
+	</bean>    
+	
+	<bean id="messageSourceAccessor" class="org.springframework.context.support.MessageSourceAccessor">
+        <constructor-arg ref="messageSource"/>
+    </bean>
+	
+	<bean id="message" class="wnk.com.biz.common.util.WnkMessage">
+        <property name="messageSourceAccessor" ref="messageSourceAccessor"/>
+    </bean>
+	
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		<property name="defaultLocale" value="ko" />
+	</bean>
 
     <mvc:annotation-driven />
 
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-	        <property name="prefix" value="/WEB-INF/view/"/>
-	        <property name="suffix" value=".jsp"/>
+		<property name="prefix" value="/WEB-INF/view/"/>
+		<property name="suffix" value=".jsp"/>
 	</bean>
 	
 	<aop:aspectj-autoproxy/>
+	
 	<bean id="wnkParameterAspect" class="wnk.com.common.interceptor.WnkParameterAspect" />
+	
+	<!--
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver" >
+		<property name="defaultLocale" value="ko" />
+	    <property name="cookieName" value="home-lang"/>   
+	    <property name="cookieMaxAge" value="-1"/>
+	    <property name="cookiePath" value="/"/>
+	</bean>
+ 	-->
 	
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**/*.mvc"/>
 			<bean class="wnk.com.common.interceptor.WnkCommonInterceptor"/>
 		</mvc:interceptor>
+		<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<property name="paramName" value="lang" />
+    	</bean>
 	</mvc:interceptors>
 	
 	<!-- <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">

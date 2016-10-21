@@ -13,7 +13,10 @@
 <center><h1>Sample Page</h1></center><br/>
 <table cellpadding="0" cellspacing="0" border="0">
 <tr>
-	<td><a href="./sampleBoard/boardList.mvc">1. 게시판 샘플(CRUD 포함)</a></td>
+	<td><a href="./sampleBoard/boardList.mvc">1. 게시판 샘플(CRUD 포함)</a> 
+	<spring:message code='hello' var="testMessage1"/>
+	${testMessage1}
+	</td>
 </tr>
 </table>
 </body>
