@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+     xmlns="http://www.springframework.org/schema/security"
+     xmlns:beans="http://www.springframework.org/schema/beans"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="
+     http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans.xsd
+     http://www.springframework.org/schema/security
+     http://www.springframework.org/schema/security/spring-security.xsd">
+
+     
+	<http auto-config="true" use-expressions="true">
+    	<form-login login-page="/signin" username-parameter="user_id" 
+    		password-parameter="password"
+    		login-processing-url="/signin_ok"
+    		authentication-success-handler-ref="signinSuccessHandler"
+    		authentication-failure-handler-ref="signinFailureHandler"
+    		default-target-url="/mypage.mvc"
+    		always-use-default-target="false"
+    	/>
+
+    	<logout invalidate-session="true"
+    		logout-success-url="/signin"
+    		logout-url="/signout" />
+    		
+    	<access-denied-handler ref="accessFailureHandler" />
+    		
+    	<!-- <intercept-url pattern="/**" access="hasRole('ROLE_USER')" /> -->
+    	
+    </http>
+    
+    <beans:bean id="signinSuccessHandler" class="wnk.com.common.security.handler.SigninSuccessHandler" />
+    <beans:bean id="signinFailureHandler" class="wnk.com.common.security.handler.SigninFailureHandler">
+        <beans:property name="defaultFailureUrl" value="/signin?error=true" />
+    </beans:bean>
+    <beans:bean id="accessFailureHandler" class="wnk.com.common.security.handler.AccessFailureHandler">
+		<beans:property name="errorPage" value="/403" />
+	</beans:bean>
+	
+	<beans:bean id="userService" class="wnk.com.common.security.service.UserService" />
+	<beans:bean id="customAuthenticationProvider" class="wnk.com.common.security.provider.CustomAuthenticationProvider" />
+	<beans:bean id="encoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder" />
+    <beans:bean id="saltSource" class="org.springframework.security.authentication.dao.ReflectionSaltSource">
+        <beans:property name="userPropertyToUse" value="username" />
+    </beans:bean>
+    
+    <authentication-manager alias="authenticationManager">
+    	<authentication-provider ref="customAuthenticationProvider" />
+    	<authentication-provider user-service-ref="userService">
+        	<password-encoder ref="encoder">
+            	<salt-source ref="saltSource" />
+        	</password-encoder>
+    	</authentication-provider>
+	</authentication-manager>
+     
+</beans:beans>
