@@ -19,7 +19,7 @@
 		<servlet.version>3.0.1</servlet.version>
 
 		<!-- Spring -->
-		<spring-framework.version>3.2.3.RELEASE</spring-framework.version>
+		<spring-framework.version>3.2.8.RELEASE</spring-framework.version>
 
 		<!-- Hibernate / JPA -->
 		<hibernate.version>4.2.1.Final</hibernate.version>
@@ -56,6 +56,18 @@
     		<groupId>org.aspectj</groupId>
     		<artifactId>aspectjtools</artifactId>
     		<version>${org.aspectj-version}</version>
+		</dependency>
+		
+		<!-- Spring Security -->
+		<dependency>
+     		<groupId>org.springframework.security</groupId>
+     		<artifactId>spring-security-web</artifactId>
+     		<version>${spring-framework.version}</version>
+		</dependency>
+		<dependency>
+     		<groupId>org.springframework.security</groupId>
+     		<artifactId>spring-security-config</artifactId>
+     		<version>${spring-framework.version}</version>
 		</dependency>
 
 		<!-- Other Web dependencies -->
@@ -183,7 +195,14 @@
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
-
+		
+		<!-- https://mvnrepository.com/artifact/commons-lang/commons-lang -->
+		<dependency>
+    		<groupId>commons-lang</groupId>
+    		<artifactId>commons-lang</artifactId>
+    		<version>2.6</version>
+		</dependency>
+	
 	</dependencies>
 
 	<!-- Oracle Jdbc repository -->
