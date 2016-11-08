@@ -11,28 +11,28 @@
 
      
 	<http auto-config="true" use-expressions="true">
-    	<form-login login-page="/signin" username-parameter="user_id" 
+    	<form-login login-page="/sample/login/login.mvc" username-parameter="user_id" 
     		password-parameter="password"
-    		login-processing-url="/signin_ok"
+    		login-processing-url="/sample/login/login_ok"
     		authentication-success-handler-ref="signinSuccessHandler"
     		authentication-failure-handler-ref="signinFailureHandler"
-    		default-target-url="/mypage.mvc"
+    		default-target-url="/sample/login/login.mvc"
     		always-use-default-target="false"
     	/>
 
     	<logout invalidate-session="true"
-    		logout-success-url="/signin"
-    		logout-url="/signout" />
+    		logout-success-url="/sample/login/login.mvc"
+    		logout-url="/sample/login/logout" />
     		
     	<access-denied-handler ref="accessFailureHandler" />
     		
-    	<!-- <intercept-url pattern="/**" access="hasRole('ROLE_USER')" /> -->
+    	<intercept-url pattern="/sample/login/login.mvc" access="hasRole('ROLE_ANONYMOUS')" />
     	
     </http>
     
     <beans:bean id="signinSuccessHandler" class="wnk.com.common.security.handler.SigninSuccessHandler" />
     <beans:bean id="signinFailureHandler" class="wnk.com.common.security.handler.SigninFailureHandler">
-        <beans:property name="defaultFailureUrl" value="/signin?error=true" />
+        <beans:property name="defaultFailureUrl" value="/sample/login/login.mvc?error=true" />
     </beans:bean>
     <beans:bean id="accessFailureHandler" class="wnk.com.common.security.handler.AccessFailureHandler">
 		<beans:property name="errorPage" value="/403" />

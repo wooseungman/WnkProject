@@ -29,6 +29,7 @@
 </head>
 <body>
 	<div id="wrapper">
+		<page:apply-decorator name="sample_top" encoding="utf-8"/>
 		<decorator:body/>
 	</div>
     <!-- /#wrapper -->

@@ -3,8 +3,10 @@
     <excludes>
         <pattern>/*.json</pattern>
         <pattern>/*.html</pattern>
+        <pattern>/sample/login/login.mvc</pattern>
+        <pattern>/index.jsp</pattern>
     </excludes>
-    <decorator name="top" page="top.jsp" />
+    <decorator name="sample_top" page="top.jsp" />
     
     <!-- <decorator name="layout2" page="/views/layout/layout2.jsp">
         <pattern>/login</pattern>

@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
@@ -18,6 +19,8 @@ public class SigninSuccessHandler extends SavedRequestAwareAuthenticationSuccess
 			Authentication authentication) throws ServletException, IOException {
 		
 		String accept = request.getHeader("accept");
+		HttpSession session = request.getSession(true);
+		session.setAttribute("memberInfo", authentication.getPrincipal());
 		
 		if( StringUtils.indexOf(accept, "html") > -1 ) {
 

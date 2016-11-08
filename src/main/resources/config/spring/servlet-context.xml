@@ -81,4 +81,15 @@
 	<util:properties id="db" location="classpath:/props/db.properties" />
 	<util:properties id="app" location="classpath:/props/app.properties" />
 	
+	<bean class="wnk.com.common.exception.resolver.WnkAjaxExceptionResolver">
+        <property name="order" value="1"/>
+        <property name="view">
+            <bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView"/>
+        </property>
+    </bean>
+    
+    <bean class="wnk.com.common.exception.resolver.WnkExceptionResolver">
+        <property name="order" value="2"/>
+    </bean>
+	
 </beans>

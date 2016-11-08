@@ -8,7 +8,7 @@
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 		</button>
-		<a class="navbar-brand" href="index.html">Wnk Project Sample</a>
+		<a class="navbar-brand" href="index.html">SB Admin v2.0</a>
 	</div>
 	<!-- /.navbar-header -->
 	<ul class="nav navbar-top-links navbar-right">
@@ -207,16 +207,10 @@
 				<i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
 			</a>
 			<ul class="dropdown-menu dropdown-user">
-				<c:if test="${not empty memberInfo}">
-	            	<li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a></li>
-					<li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a></li>
-					<li class="divider"></li>
-					<li><a href="/sample/login/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a></li>
-				</c:if>
-				<c:if test="${empty memberInfo}">
-					<li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Login</a></li>
-				</c:if>
-				
+				<li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a></li>
+				<li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a></li>
+				<li class="divider"></li>
+				<li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a></li>
 			</ul>
 			<!-- /.dropdown-user -->
 		</li>
@@ -319,7 +313,7 @@
 							<a href="/sample/sampleBoard/boardList.mvc">BoardList Sample</a>
 						</li>
 						<li>
-							<a href="/sample/login/login.mvc">Login Page</a>
+							<a href="/sample/signin.mvc">Login Page</a>
 						</li>
 					</ul>
 					<!-- /.nav-second-level -->
@@ -331,3 +325,35 @@
 	<!-- /.navbar-static-side -->
 </nav>
 
+<div id="page-wrapper">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">Sample</h1>
+				<div class="panel panel-default">
+	                <div class="panel-heading">
+	                    Multi Langue Test
+	                </div>
+	                <!-- .panel-heading -->
+	                <div class="panel-body">
+	                    <div class="panel-group" id="accordion">
+							<div id="collapseOne" class="panel-collapse collapse in">
+								<div class="panel-body">
+									WnkMessage.getMessage : ${getMessage}<br/>
+									
+									<spring:message code='hello' var="testMessage1"/>
+									spring:message : ${testMessage1}    
+								</div>
+							</div>
+	                    </div>
+	                </div>
+	                <!-- .panel-body -->
+	            </div>
+			</div>
+			<!-- /.col-lg-12 -->
+		</div>
+		<!-- /.row -->
+	</div>
+	<!-- /.container-fluid -->
+</div>
+<!-- /#page-wrapper -->
