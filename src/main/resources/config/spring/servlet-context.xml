@@ -91,5 +91,15 @@
     <bean class="wnk.com.common.exception.resolver.WnkExceptionResolver">
         <property name="order" value="2"/>
     </bean>
+    
+    <bean id="multipartResolver" class="co.wnk.framework.core.fileupload.resolver.WnkCommonsMultipartResolver">
+    	<property name="maxUploadSize" value="52428800"/>
+		<property name="defaultEncoding" value="UTF-8"/>
+		<property name="uploadTempDir" ref="uploadDirResource"/>
+    </bean>
+    
+    <bean id="uploadDirResource" class="org.springframework.core.io.FileSystemResource">
+		 <constructor-arg value="${upload.tmpPath}"/>
+	</bean>
 	
 </beans>
