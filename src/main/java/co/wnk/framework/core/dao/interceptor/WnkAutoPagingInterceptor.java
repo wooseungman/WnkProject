@@ -34,7 +34,7 @@ public class WnkAutoPagingInterceptor  implements Interceptor {
     	
     	StatementHandler handler = (StatementHandler)invocation.getTarget();
     	Map<String,Object> paramMap = (Map<String, Object>) (handler.getParameterHandler().getParameterObject() != null ? handler.getParameterHandler().getParameterObject() : "");
-    	System.out.println("paramMap : " + paramMap.toString());
+    	
     	StatementHandler statementHandler = (StatementHandler) invocation.getTarget();
 		MetaObject metaStatementHandler =  MetaObject.forObject(statementHandler, new DefaultObjectFactory(), new DefaultObjectWrapperFactory());
 		Configuration configuration = (Configuration)metaStatementHandler.getValue("delegate.configuration");
@@ -63,14 +63,6 @@ public class WnkAutoPagingInterceptor  implements Interceptor {
 		int StartNumber = rowBounds.getOffset() * (rowBounds.getLimit() -1);
 		int	EndNumber = rowBounds.getOffset() * (rowBounds.getLimit());
 		
-		System.out.println("*****************************************************");
-		System.out.println("rowBounds.getLimit() : " + rowBounds.getLimit());
-		System.out.println("rowBounds.getOffset() : " + rowBounds.getLimit());
-		System.out.println("StartNumber : " + StartNumber);
-		System.out.println("EndNumber : " + EndNumber);
-		System.out.println("*****************************************************");
-		
-		
 		if(configuration.getDatabaseId().equals("MySQL")){
 			pagingSql.append("SELECT NONPAGINATEDLIST.* FROM (");
 			pagingSql.append(sql);
@@ -84,8 +76,6 @@ public class WnkAutoPagingInterceptor  implements Interceptor {
 			
 		}
 		
-		System.out.println(pagingSql);
-		
 		metaStatementHandler.setValue("delegate.boundSql.sql", pagingSql.toString());
 		metaStatementHandler.setValue("delegate.rowBounds.offset", RowBounds.NO_ROW_OFFSET);
 		metaStatementHandler.setValue("delegate.rowBounds.limit", RowBounds.NO_ROW_LIMIT);
@@ -95,19 +85,12 @@ public class WnkAutoPagingInterceptor  implements Interceptor {
 		
 		try{
 			countSql.append("SELECT COUNT(1) TOTAL_ROWS_COUNT FROM (").append(sql).append(") AUTO_COUNT");
-			
-			System.out.println("countSql : " + countSql);
-			
 			Connection connection = (Connection) invocation.getArgs()[0];
 			countStmt = connection.prepareStatement(countSql.toString());
 			rs = countStmt.executeQuery();
 			if (rs.next()){
-				System.out.println("rs.getInt(1) : "  + rs.getInt(1));
 				paramMap.put("LIST_TOT_COUNT", rs.getInt(1));
 				request.setAttribute("LIST_TOT_COUNT", rs.getInt(1));
-				
-				System.out.println("paramMap : " + paramMap.get("LIST_TOT_COUNT"));
-				System.out.println("LIST_TOT_COUNT : " + request.getAttribute("LIST_TOT_COUNT"));
 			}
 		}catch(Exception e){
 			throw new Exception();

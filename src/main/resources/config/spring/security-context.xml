@@ -30,16 +30,16 @@
     	
     </http>
     
-    <beans:bean id="signinSuccessHandler" class="wnk.com.common.security.handler.SigninSuccessHandler" />
-    <beans:bean id="signinFailureHandler" class="wnk.com.common.security.handler.SigninFailureHandler">
+    <beans:bean id="signinSuccessHandler" class="co.wnk.framework.core.security.handler.SigninSuccessHandler" />
+    <beans:bean id="signinFailureHandler" class="co.wnk.framework.core.security.handler.SigninFailureHandler">
         <beans:property name="defaultFailureUrl" value="/sample/login/login.mvc?error=true" />
     </beans:bean>
-    <beans:bean id="accessFailureHandler" class="wnk.com.common.security.handler.AccessFailureHandler">
+    <beans:bean id="accessFailureHandler" class="co.wnk.framework.core.security.handler.AccessFailureHandler">
 		<beans:property name="errorPage" value="/403" />
 	</beans:bean>
 	
-	<beans:bean id="userService" class="wnk.com.common.security.service.UserService" />
-	<beans:bean id="customAuthenticationProvider" class="wnk.com.common.security.provider.CustomAuthenticationProvider" />
+	<beans:bean id="userService" class="co.wnk.framework.core.security.service.UserService" />
+	<beans:bean id="customAuthenticationProvider" class="co.wnk.framework.core.security.provider.CustomAuthenticationProvider" />
 	<beans:bean id="encoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder" />
     <beans:bean id="saltSource" class="org.springframework.security.authentication.dao.ReflectionSaltSource">
         <beans:property name="userPropertyToUse" value="username" />

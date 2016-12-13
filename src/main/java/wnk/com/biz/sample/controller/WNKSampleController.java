@@ -1,8 +1,7 @@
 package wnk.com.biz.sample.controller;
 
-import java.security.Principal;
-import java.util.Iterator;
 import java.util.Map;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +15,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import wnk.com.biz.common.util.WnkMessage;
+import co.wnk.framework.core.common.util.message.WnkMessageProperty;
+import wnk.com.biz.common.service.FileUploadService;
 import wnk.com.biz.sample.service.WNKSampleService;
-import wnk.com.common.security.Vo.User;
+import co.wnk.framework.core.security.vo.User;
 
 @Controller
 public class WNKSampleController {
@@ -31,6 +31,10 @@ public class WNKSampleController {
 	@Autowired private WNKSampleService service;
 	
 	@Autowired private PasswordEncoder passwordEncoder;
+	
+	@Autowired private FileUploadService fileService;
+	
+	//@Autowired WnkMessageProperty message;
 	
 	/**
 	 * 샘플 메인페이지
@@ -52,7 +56,7 @@ public class WNKSampleController {
 	
 	@RequestMapping(value = "/sample/message/sampleMessage.mvc")
 	public void sampleMessageTest(Map<String,Object> paramMap, ModelMap model) {
-		model.addAttribute("getMessage", WnkMessage.getMessage("hello"));
+		model.addAttribute("getMessage", WnkMessageProperty.getMessage("hello"));
 	}
 	
 	@RequestMapping(value = "/sample/login/login.mvc")
@@ -80,4 +84,22 @@ public class WNKSampleController {
          logger.info(guest_password + "//" + admin_password);
     }
 	
+	@RequestMapping(value = "/sample/sampleFileUpload.mvc")
+	public void sampleFileUpload(Map<String,Object> paramMap, ModelMap model) { }
+	
+	@RequestMapping(value = "/sample/sampleFileUploadSave.mvc")
+	public void sampleFileUploadSave(Map<String,Object> paramMap, ModelMap model) throws Throwable {
+		paramMap.put("SOURCE_UNIQUE_SEQ", UUID.randomUUID());
+		fileService.upLoad(paramMap, "file");
+	}
+	
+	@RequestMapping(value = "/sample/sampleTransactionCheck.mvc")
+	public void sampleTransactionCheck(Map<String,Object> paramMap, ModelMap model) throws Throwable {
+		service.saveTest(paramMap);
+	}
+	
+	@RequestMapping(value = "/sample/sampleMessageChangeTest.mvc")
+	public void sampleMessageChangeTest(Map<String,Object> paramMap, ModelMap model) throws Throwable {
+		System.out.println("hello : " + WnkMessageProperty.getMessage("hello"));
+	}
 }

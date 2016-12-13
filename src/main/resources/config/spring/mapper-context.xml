@@ -10,7 +10,7 @@
         <property name="mapperLocations" value="classpath*:mapper/**/*-mapper.xml" />
         <property name="plugins">
             <array>
-                <bean class="wnk.com.common.interceptor.PaginationInterceptor" />
+                <bean class="co.wnk.framework.core.dao.interceptor.WnkAutoPagingInterceptor" />
             </array>
         </property>
     </bean>

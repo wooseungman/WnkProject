@@ -19,7 +19,7 @@
 		<servlet.version>3.0.1</servlet.version>
 
 		<!-- Spring -->
-		<spring-framework.version>3.2.8.RELEASE</spring-framework.version>
+		<spring-framework.version>4.0.9.RELEASE</spring-framework.version>
 
 		<!-- Hibernate / JPA -->
 		<hibernate.version>4.2.1.Final</hibernate.version>
@@ -62,12 +62,12 @@
 		<dependency>
      		<groupId>org.springframework.security</groupId>
      		<artifactId>spring-security-web</artifactId>
-     		<version>${spring-framework.version}</version>
+     		<version>3.2.8.RELEASE</version>
 		</dependency>
 		<dependency>
      		<groupId>org.springframework.security</groupId>
      		<artifactId>spring-security-config</artifactId>
-     		<version>${spring-framework.version}</version>
+     		<version>3.2.8.RELEASE</version>
 		</dependency>
 
 		<!-- Other Web dependencies -->
@@ -105,6 +105,12 @@
 			<version>${spring-framework.version}</version>
 		</dependency>
 		
+		<dependency>
+    		<groupId>cglib</groupId>
+    		<artifactId>cglib-nodep</artifactId>
+    		<version>3.1</version>
+		</dependency>
+		
 		<!-- Spring Proxy Class -->
 		<dependency>
 			<groupId>cglib</groupId>
@@ -119,23 +125,57 @@
     		<version>0.2.7</version>
 		</dependency>
 		
-		
-
-		<!-- Logging with SLF4J & LogBack -->
+		<!-- Logging with SLF4J & Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>${slf4j.version}</version>
-			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${slf4j.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j.version}</version>
+			<scope>runtime</scope>
 		</dependency>
 		
 		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<version>${logback.version}</version>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.15</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.mail</groupId>
+					<artifactId>mail</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.jms</groupId>
+					<artifactId>jms</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jdmk</groupId>
+					<artifactId>jmxtools</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jmx</groupId>
+					<artifactId>jmxri</artifactId>
+				</exclusion>
+			</exclusions>
 			<scope>runtime</scope>
 		</dependency>
-
+		
+		<!-- resultsettable -->
+		<dependency>
+		    <groupId>org.lazyluke</groupId>
+		    <artifactId>log4jdbc-remix</artifactId>
+		    <version>0.2.7</version>
+		</dependency>
+		
 		<!-- Hibernate -->
 		<dependency>
 			<groupId>org.hibernate</groupId>

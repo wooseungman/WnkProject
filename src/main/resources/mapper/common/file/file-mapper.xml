@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="file">
+    
+    <insert id="insertAttaFile" parameterType="java.util.Map">
+    	<selectKey resultType="string" keyProperty="ATTAFILE_SEQ" order="BEFORE">
+        	SELECT IFNULL(MAX(ATTAFILE_SEQ),0)+1 FROM ATTAFILE_INFO       
+    	</selectKey>
+    	INSERT INTO ATTAFILE_INFO (
+    		 SOURCE_UNIQUE_SEQ
+			,ATTAFILE_SEQ
+			,ATTAFILE_TP
+			,ORGNFILE_NM
+			,ATTAFILE_NM
+			,THUMBNAIL_NM
+			,ATTAFILE_PATH
+			,ATTAFILE_SIZE
+			,ATTAFILE_HEIGHT
+			,ATTAFILE_WIDTH
+			,DOWN_NUM
+			,DEL_CD
+			,REG_MEMBER_SEQ
+			,REG_DATE
+			,MODIFY_MEMBER_SEQ
+			,MODIFY_DATE
+    	) VALUES (
+    		 #{SOURCE_UNIQUE_SEQ}
+			,#{ATTAFILE_SEQ}
+			,#{ATTAFILE_TP}
+			,#{ORGNFILE_NM}
+			,#{ATTAFILE_NM}
+			,#{THUMBNAIL_NM}
+			,#{ATTAFILE_PATH}
+			,#{ATTAFILE_SIZE}
+			,#{ATTAFILE_HEIGHT}
+			,#{ATTAFILE_WIDTH}
+			,0
+			,'N'
+			,#{USER_ID}
+			,NOW()
+			,#{USER_ID}
+			,NOW()
+    	)
+    </insert>
+</mapper>

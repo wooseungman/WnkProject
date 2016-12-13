@@ -11,7 +11,7 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 
-import wnk.com.common.exception.WnkException;
+import co.wnk.framework.core.Exception.WnkException;
 
 public class WnkAjaxExceptionResolver implements HandlerExceptionResolver,Ordered {
 	

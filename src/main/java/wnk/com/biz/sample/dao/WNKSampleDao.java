@@ -2,13 +2,13 @@ package wnk.com.biz.sample.dao;
 
 import java.util.List;
 
-import org.apache.ibatis.session.RowBounds;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import co.wnk.framework.core.dao.vo.WnkRowBounds;
 
 @Repository
 public class WNKSampleDao {
@@ -33,10 +33,6 @@ public class WNKSampleDao {
         return sqlSession.delete(queryId, params);
     }
      
-    public Object selectOne(String queryId){
-        return sqlSession.selectOne(queryId);
-    }
-     
     public Object selectOne(String queryId, Object params){
 		this.getSqlString(queryId, params);
     	return sqlSession.selectOne(queryId, params);
@@ -47,16 +43,11 @@ public class WNKSampleDao {
         return sqlSession.selectList(queryId);
     }
      
-    public List<?> selectList(String queryId, Object params, RowBounds rowBounds){
-    	return sqlSession.selectList(queryId,params, rowBounds);
+    public List<?> selectList(String queryId, Object params){
+    	return sqlSession.selectList(queryId,params);
     }
     
-    public List<?> selectPagzedList(String queryId, Object params){
-    	String excuteQuery = this.getSqlString(queryId, params);
-    	System.out.println("******************************* queryId : " + queryId + " Start ************************************");
-    	System.out.println(excuteQuery);
-    	System.out.println("******************************* queryId : " + queryId + " End ************************************");
-    	return sqlSession.selectList(queryId,params,new RowBounds(10,10));
+    public List<?> selectPagedList(String queryId, Object params){
+    	return sqlSession.selectList(queryId,params, new WnkRowBounds().getRowBounds());
     }
-	
 }

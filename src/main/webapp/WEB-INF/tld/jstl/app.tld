@@ -10,7 +10,7 @@
 	
 	<tag>
     	<name>paging</name>
-    	<tag-class>wnk.com.biz.common.taglib.CommonPagingNavTag</tag-class>
+    	<tag-class>co.wnk.framework.common.taglib.CommonPagingNavTag</tag-class>
     	<body-content>empty</body-content>
     	<description>
         	This is a simple paging tag.

@@ -16,4 +16,28 @@
 		</if>
 		ORDER BY ID DESC
     </select>
+    
+    <insert id="insertSample" parameterType="java.util.Map">
+        INSERT INTO SAMPLE (
+        	 ID
+			,NAME
+			,DESCRIPTION
+			,USE_YN
+			,REG_USER
+        ) VALUES (
+        	 #{ID}
+			,#{NAME}
+			,#{DESCRIPTION}
+			,#{USE_YN}
+			,#{REG_USER}
+        )
+    </insert>
+    
+    <insert id="insertMybatis" parameterType="java.util.Map">
+        INSERT INTO mybatis_table (
+        	 title
+        ) VALUES (
+        	 #{title}
+        )
+    </insert>
 </mapper>
