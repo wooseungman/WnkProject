@@ -44,10 +44,10 @@ public class WNKSampleDao {
     }
      
     public List<?> selectList(String queryId, Object params){
-    	return sqlSession.selectList(queryId,params);
+    	return sqlSession.selectList(queryId, params);
     }
     
     public List<?> selectPagedList(String queryId, Object params){
-    	return sqlSession.selectList(queryId,params, new WnkRowBounds().getRowBounds());
+    	return sqlSession.selectList(queryId, params, new WnkRowBounds().getRowBounds());
     }
 }

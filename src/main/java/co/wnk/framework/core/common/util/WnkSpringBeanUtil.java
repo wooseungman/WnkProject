@@ -18,4 +18,10 @@ public class WnkSpringBeanUtil {
 		WebApplicationContext contenxt = WebApplicationContextUtils.getWebApplicationContext(conext);
 		return contenxt.getBean(beanName);
 	}
+	
+	public static ServletContext getServletContext(){
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+		HttpSession session = request.getSession();
+		return session.getServletContext();
+	}
 }

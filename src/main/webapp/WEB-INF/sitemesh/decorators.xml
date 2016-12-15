@@ -6,14 +6,12 @@
         <pattern>/sample/login/login.mvc</pattern>
         <pattern>/index.jsp</pattern>
     </excludes>
-    <decorator name="sample_top" page="top.jsp" />
     
-    <!-- <decorator name="layout2" page="/views/layout/layout2.jsp">
-        <pattern>/login</pattern>
-        <pattern>/login_error</pattern>
-    </decorator> -->
+    <decorator name="sample_top" page="sample_top.jsp" />
+    <decorator name="sample_left" page="sample_left.jsp" />
+    <decorator name="sample_bottom" page="sample_bottom.jsp" />
     
-    <decorator name="layout" page="layout.jsp">
+    <decorator name="layout" page="sample_layout.jsp">
         <pattern>/*</pattern>
     </decorator>
 </decorators>

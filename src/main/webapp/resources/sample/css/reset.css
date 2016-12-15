@@ -1,0 +1,35 @@
+@charset "utf-8";
+/* CSS Document */
+
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,b, u, i, center,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td,article, aside, canvas, details, embed,figure, figcaption, footer, header, hgroup,menu, nav, output, ruby, section, summary,time, mark, audio, video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:top}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,footer, header, hgroup, menu, nav, section{display:block}
+body{font-size:13px;line-height:1}
+ol, ul{list-style:none}
+blockquote, q{quotes:none}
+blockquote:before, blockquote:after,q:before, q:after{content:'';content:none}
+table{border-collapse:collapse;border-spacing:0;font-size:13px;line-height:1;vertical-align:middle}
+table td{border-collapse:collapse;border-spacing:0;font-size:13px;line-height:1;vertical-align:middle;margin-top:10px;margin-left:10px;height:25px;}
+
+.board_title{font-weight:bold;text-align:center;padding-left:10px;border:1px solid #BBBBBB;background-color:#EEEEEE}
+.board_content{padding-left:10px;border:1px solid #BBBBBB;background-color:#FFFFFF}
+.selectbox{width:120px;height:25px;border:1px solid #EEEEEE}
+.inputbox{width:200px;height:20px;border:1px solid #EEEEEE}
+.btn{eight:20px;}
+
+/* common */
+body{background:#dfdfe0;height:100%;font-family:"Nanum Gothic", sans-serif;font-size:13px}
+a{text-decoration:none;color:#555}
+select, button{font-family:"Nanum Gothic", sans-serif;font-size:12px;outline:none}
+button{background:none;border:0;margin:0;padding:0;font-family:"Nanum Gothic", sans-serif;cursor:pointer;outline:none}
+textarea{font-family:"Nanum Gothic", sans-serif;outline:none}
+button img{display:block}
+legend{overflow:hidden;position:absolute;left:-1000%;height:0}
+input{font-family:"Nanum Gothic", sans-serif;font-size:12px;outline:none}
+img{vertical-align:top}
+
+a, a:active, a:visited{color:#4b4643;text-decoration:none;cursor:pointer}
+a:hover{color:#d78d54;text-decoration:none}

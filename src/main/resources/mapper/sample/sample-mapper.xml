@@ -4,34 +4,61 @@
     
     <select id="selectSampleList" parameterType="java.util.Map" resultType="java.util.HashMap">
         SELECT 
-			 ID
+			 SEQ
+			,ID
 			,NAME
 			,DESCRIPTION
 			,USE_YN
 			,REG_USER
-		FROM SAMPLE
+			,REG_DATE
+		FROM GBL_BOARD_SAMPLE
 		WHERE 1=1
 		<if test="SEARCH_VALUE != null">
 			AND ID LIKE '%${SEARCH_VALUE}%'
 		</if>
-		ORDER BY ID DESC
+		<if test="SEQ != null">
+			AND SEQ = #{SEQ}
+		</if>
+		ORDER BY SEQ DESC
     </select>
     
     <insert id="insertSample" parameterType="java.util.Map">
-        INSERT INTO SAMPLE (
-        	 ID
+		<selectKey resultType="string" keyProperty="SEQ" order="BEFORE">
+        	SELECT IFNULL(MAX(SEQ),0)+1 FROM GBL_BOARD_SAMPLE        
+    	</selectKey>
+        INSERT INTO GBL_BOARD_SAMPLE (
+        	 SEQ
+        	,ID
 			,NAME
 			,DESCRIPTION
 			,USE_YN
 			,REG_USER
+			,REG_DATE
         ) VALUES (
-        	 #{ID}
+        	 #{SEQ}
+        	,#{ID}
 			,#{NAME}
 			,#{DESCRIPTION}
 			,#{USE_YN}
 			,#{REG_USER}
+			,NOW()
         )
     </insert>
+    
+    <update id="updateSample" parameterType="java.util.Map">
+    	UPDATE GBL_BOARD_SAMPLE SET
+    		 ID = #{ID}
+    		,NAME = #{NAME}
+    		,DESCRIPTION = #{DESCRIPTION}
+    		,USE_YN = #{USE_YN}
+    		,REG_USER = #{REG_USER}
+    		,REG_DATE = NOW()
+    	WHERE SEQ = #{SEQ}
+    </update>
+    
+    <delete id="deleteSample" parameterType="java.util.Map">
+    	DELETE FROM GBL_BOARD_SAMPLE WHERE SEQ = #{SEQ}
+    </delete>
     
     <insert id="insertMybatis" parameterType="java.util.Map">
         INSERT INTO mybatis_table (

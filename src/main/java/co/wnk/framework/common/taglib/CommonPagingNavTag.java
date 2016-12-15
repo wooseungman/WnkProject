@@ -46,6 +46,7 @@ public class CommonPagingNavTag extends RequestContextAwareTag {
 		
 		tot_count = Integer.parseInt(String.valueOf(request.getAttribute("LIST_TOT_COUNT")));
 		lastPpage = tot_count/pageBlockSize;
+		
 		if(tot_count%pageBlockSize > 0) lastPpage++;
 		startPage = ((currentPage/10))*10+1;
 		endPage = ((currentPage/10)+1)*10;
@@ -79,7 +80,7 @@ public class CommonPagingNavTag extends RequestContextAwareTag {
 		if(startPage > pageBlockSize) result.append("<a href='"+url.toString()+"?page="+(startPage-10)+ paremeter.toString() +"'>◁</a>&nbsp;&nbsp;");
 		
 		for(int i=startPage;i<=endPage;i++){
-			if(currentPage == i) result.append("<b>" + i + "</b>&nbsp;"); 
+			if(currentPage == i) result.append("<span style='font-weight:bold'>" + i + "</span>&nbsp;"); 
 			else result.append("<a href='"+url.toString()+"?page="+i+ paremeter.toString() +"'>"+i+"</a>&nbsp;");
 			if(i < endPage)result.append(" | ");
 		}

@@ -6,10 +6,12 @@ import java.util.List;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import co.wnk.framework.core.security.vo.Role;
 import co.wnk.framework.core.security.vo.User;
 
+@Service
 public class UserService implements UserDetailsService {
 
 	public User loadUserByUsername(String username) throws UsernameNotFoundException {

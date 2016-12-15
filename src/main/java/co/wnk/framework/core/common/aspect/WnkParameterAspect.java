@@ -16,6 +16,10 @@ public class WnkParameterAspect {
 	
 	@Around("execution(* wnk.com.biz..*.*Controller.*(..))")
     public Object setMapParamter(ProceedingJoinPoint joinPoint) throws Throwable {
+		
+		System.out.println("************************* AOP START ******************************");
+		
+		
 		Object[] args = joinPoint.getArgs();
 		if(args.length == 0) return joinPoint.proceed();
 		

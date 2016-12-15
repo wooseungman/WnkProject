@@ -3,12 +3,15 @@ package co.wnk.framework.core.dao.vo;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.RowBounds;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import co.wnk.framework.core.common.util.config.ApplicationProperty;
+
 public class WnkRowBounds extends RowBounds{
 	
-	public int ROW_OFF_SET = 30; 
+	public int ROW_OFF_SET = ApplicationProperty.get("page.size") != null ? Integer.parseInt(ApplicationProperty.get("page.size")) : 10; 
 	public int ROW_LIMIT = 1;
 	public int ROW_START = 0;
 	public int ROW_END = 0;

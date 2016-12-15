@@ -30,6 +30,11 @@
 		<property name="basenames" value="message/messages"/>
 	</bean> -->
 	
+	<!-- filedownload -->
+	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<property name="order" value="0"/>
+	</bean>
+	
 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basenames">
         	<list>
@@ -84,6 +89,9 @@
     	</bean>
 	</mvc:interceptors>
 	
+	<!-- EXCEL DOWNLOAD -->
+	<bean id="excelView" class="co.wnk.framework.core.common.io.WnkExcelView"/>
+	
 	<!-- <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
@@ -128,5 +136,4 @@
             <bean class="co.wnk.framework.core.fileupload.component.ThumnailerComponent" />
         </property>
     </bean>
-	
 </beans>

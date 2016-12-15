@@ -162,6 +162,13 @@ public class WnkStringUtil {
 		}
 		return str.trim();
 	}
+	
+	public static String trim(Object obj) {
+		if (obj == null) {
+			return "";
+		}
+		return String.valueOf(obj).trim();
+	}
 
 	public static String getStr(String str, String defaultStr) {
 		if (str == null || "".equals(str)) {

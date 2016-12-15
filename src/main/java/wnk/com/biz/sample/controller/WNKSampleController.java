@@ -1,5 +1,6 @@
 package wnk.com.biz.sample.controller;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -14,7 +15,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import co.wnk.framework.core.common.AsyncResponseMap;
+import co.wnk.framework.core.common.Constants;
+import co.wnk.framework.core.common.util.WnkStringUtil;
 import co.wnk.framework.core.common.util.message.WnkMessageProperty;
 import wnk.com.biz.common.service.FileUploadService;
 import wnk.com.biz.sample.service.WNKSampleService;
@@ -23,83 +29,87 @@ import co.wnk.framework.core.security.vo.User;
 @Controller
 public class WNKSampleController {
 	
-	@Value("#{app['page.size']}")
-	private int test;
-	
 	private static final Logger logger = LoggerFactory.getLogger(WNKSampleController.class);
 	
-	@Autowired private WNKSampleService service;
+	@Autowired
+	private WNKSampleService service;
 	
-	@Autowired private PasswordEncoder passwordEncoder;
+	@Autowired
+	private AsyncResponseMap responseMap; 
 	
-	@Autowired private FileUploadService fileService;
-	
-	//@Autowired WnkMessageProperty message;
-	
-	/**
-	 * 샘플 메인페이지
-	 * @param paramMap
-	 * @param model
-	 */
 	@RequestMapping(value = "/sample/sampleMain.mvc")
-	public void sampleMain(@RequestParam Map<String,Object> paramMap, ModelMap model) { }
+	public void sampleMain(Map<String,Object> paramMap, ModelMap model) {
 	
-	/**
-	 * 샘플 게시판 리스트
-	 * @param paramMap
-	 * @param model
-	 */
+	}
+	
 	@RequestMapping(value = "/sample/sampleBoard/boardList.mvc")
-	public void sampleBoardList(Map<String,Object> paramMap, ModelMap model) {
+	public void sambleBoardList(Map<String,Object> paramMap, ModelMap model) {
 		model.put("list", service.getPagedList(paramMap));
 	}
 	
-	@RequestMapping(value = "/sample/message/sampleMessage.mvc")
-	public void sampleMessageTest(Map<String,Object> paramMap, ModelMap model) {
-		model.addAttribute("getMessage", WnkMessageProperty.getMessage("hello"));
+	@RequestMapping(value = "/sample/sampleBoard/boardDetail.mvc")
+	public void sambleBoardDetail(Map<String,Object> paramMap, ModelMap model) {
+		model.put("detail", service.getSelectBoardDetail(paramMap));
 	}
 	
-	@RequestMapping(value = "/sample/login/login.mvc")
-    public void signin(Map<String,Object> paramMap, ModelMap model) {
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/sample/sampleBoard/boardDelete.mvc")
+	public @ResponseBody Map<String, Object> boardDelete(Map<String,Object> paramMap, ModelMap model) {
 		
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Object principal = auth.getPrincipal();
-		if(principal != null && principal instanceof User){
-			User user = (User) auth.getPrincipal();
-			System.out.println("로그인 되어 있슴!!!!!!!");
+		int deleteCnt = service.removeBoardArticle(paramMap);
+		if(deleteCnt > 0){
+			String returnUrl = "/sample/sampleBoard/boardList.mvc?page="+WnkStringUtil.trim(paramMap.get("page"))
+				+"&SEARCH_GUBUN="+WnkStringUtil.trim(paramMap.get("SEARCH_GUBUN"))+"&SEARCH_VALUE="
+				+WnkStringUtil.trim(paramMap.get("SEARCH_VALUE"));
+			
+			return responseMap.setMessage(WnkMessageProperty.getMessage(Constants.deleteOk)).setUrl(returnUrl);
+		}else{
+			return responseMap.setMessage(WnkMessageProperty.getMessage(Constants.error));
 		}
 		
-		//System.out.println("user : " + user.toString());
-		//System.out.println("principal : " + principal.toString());
-		
-		System.out.println("************************************");
-		
-		
-         model.addAttribute("error", paramMap.get("error"));
-
-         // Sha 암호값을 보기 위한 테스트용.
-         String guest_password = passwordEncoder.encodePassword("guest", null);
-         String admin_password = passwordEncoder.encodePassword("admin", null);
-
-         logger.info(guest_password + "//" + admin_password);
-    }
-	
-	@RequestMapping(value = "/sample/sampleFileUpload.mvc")
-	public void sampleFileUpload(Map<String,Object> paramMap, ModelMap model) { }
-	
-	@RequestMapping(value = "/sample/sampleFileUploadSave.mvc")
-	public void sampleFileUploadSave(Map<String,Object> paramMap, ModelMap model) throws Throwable {
-		paramMap.put("SOURCE_UNIQUE_SEQ", UUID.randomUUID());
-		fileService.upLoad(paramMap, "file");
 	}
 	
-	@RequestMapping(value = "/sample/sampleTransactionCheck.mvc")
-	public void sampleTransactionCheck(Map<String,Object> paramMap, ModelMap model) throws Throwable {
-		service.saveTest(paramMap);
+	@RequestMapping(value = "/sample/sampleBoard/boardRegist.mvc")
+	public void boardRegist(Map<String,Object> paramMap, ModelMap model) {
+		if(paramMap.get("SEQ") != null && !paramMap.get("SEQ").equals(""))
+			model.put("detail", service.getSelectBoardDetail(paramMap));
 	}
 	
-	@RequestMapping(value = "/sample/sampleMessageChangeTest.mvc")
-	public void sampleMessageChangeTest(Map<String,Object> paramMap, ModelMap model) throws Throwable {
-		System.out.println("hello : " + WnkMessageProperty.getMessage("hello"));
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/sample/sampleBoard/boardSave.mvc")
+	public @ResponseBody Map<String, Object> boardSave(Map<String,Object> paramMap, ModelMap model) {
+		
+		int saveCnt = paramMap.get("SEQ") != null && !paramMap.get("SEQ").equals("") ? 
+				saveCnt = service.updateBoardArticle(paramMap) : service.insertBoardArticle(paramMap);
+		
+		if(saveCnt > 0){
+			String returnUrl = "/sample/sampleBoard/boardList.mvc?page="
+					+WnkStringUtil.trim(paramMap.get("page"))+"&SEARCH_GUBUN="+WnkStringUtil.trim(paramMap.get("SEARCH_GUBUN"))+"&SEARCH_VALUE="
+					+WnkStringUtil.trim(paramMap.get("SEARCH_VALUE"));
+			
+			return responseMap.setMessage(WnkMessageProperty.getMessage(Constants.saveOk)).setUrl(returnUrl);
+		}else{
+			return responseMap.setMessage(WnkMessageProperty.getMessage(Constants.error));
+		}
+		
 	}
+	
+	@RequestMapping(value = "/sample/sampleBoard/boardListExcelDown.mvc")
+	public ModelAndView boardListExcelDown(Map<String,Object> paramMap, ModelMap modelMap) {
+		ModelAndView mav = new ModelAndView();
+		List<Map<String, Object>> excelList = (List<Map<String,Object>>) service.getList(paramMap);
+		mav.addObject("fileName", "SampleBaordExcel");
+		mav.addObject("excelColumnLabel", "SEQ|ID|NAME|DESCRIPTION|USE_YN|REG_USER|REG_DATE");
+		mav.addObject("excelColumns", "{SEQ}|{ID}|{NAME}|{DESCRIPTION}|{USE_YN}|{REG_USER}|{REG_DATE}");
+		mav.addObject("excelList", excelList);
+		mav.setViewName("excelView");
+		
+		return mav;
+	}
+	
+	@RequestMapping(value = "/sample/message/sampleMessage.mvc")
+	public void sampleMessage(Map<String,Object> paramMap, ModelMap model) {
+		model.put("getMessage", WnkMessageProperty.getMessage("hello"));
+	}
+	
 }

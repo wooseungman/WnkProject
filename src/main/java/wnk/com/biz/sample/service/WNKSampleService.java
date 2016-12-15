@@ -23,19 +23,24 @@ public class WNKSampleService {
 		return dao.selectPagedList("sample.selectSampleList", paramMap);
 	}
 	
-	public int insertSample(Map<String,Object> paramMap){
-		return (int) dao.insert("sample.insertSample", paramMap);
+	public List<?> getList(Map<String,Object> paramMap){
+		return dao.selectList("sample.selectSampleList", paramMap);
 	}
 	
-	public int insertTest(Map<String,Object> paramMap){
-		return (int) dao.insert("sample.insertMybatis", paramMap);
+	@SuppressWarnings("unchecked")
+	public Map<String,Object> getSelectBoardDetail(Map<String,Object> paramMap){
+		return (Map<String,Object>) dao.selectOne("sample.selectSampleList", paramMap);
 	}
 	
-	public void saveTest(Map<String,Object> paramMap){
-		paramMap.put("title", "1");
-		this.insertTest(paramMap);
-		
-		paramMap.put("title", "1111111111111111111111111111111");
-		this.insertTest(paramMap);
+	public int removeBoardArticle(Map<String,Object> paramMap){
+		return (Integer) dao.delete("sample.deleteSample", paramMap);
+	}
+	
+	public int insertBoardArticle(Map<String,Object> paramMap){
+		return (Integer) dao.insert("sample.insertSample", paramMap);
+	}
+	
+	public int updateBoardArticle(Map<String,Object> paramMap){
+		return (Integer) dao.insert("sample.updateSample", paramMap);
 	}
 }

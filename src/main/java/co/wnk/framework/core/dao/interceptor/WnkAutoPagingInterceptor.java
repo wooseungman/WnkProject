@@ -64,9 +64,9 @@ public class WnkAutoPagingInterceptor  implements Interceptor {
 		int	EndNumber = rowBounds.getOffset() * (rowBounds.getLimit());
 		
 		if(configuration.getDatabaseId().equals("MySQL")){
-			pagingSql.append("SELECT NONPAGINATEDLIST.* FROM (");
-			pagingSql.append(sql);
-			pagingSql.append(") NONPAGINATEDLIST").append(" LIMIT ").append(StartNumber).append(", ").append(rowBounds.getOffset());
+			//pagingSql.append("SELECT NONPAGINATEDLIST.* FROM (");
+			pagingSql.append(sql).append(" LIMIT ").append(StartNumber).append(", ").append(rowBounds.getOffset());
+			//pagingSql.append(") NONPAGINATEDLIST").append(" LIMIT ").append(StartNumber).append(", ").append(rowBounds.getOffset());
 		}else if(configuration.getDatabaseId().equals("ORACLE")){
 			pagingSql.append("SELECT * FROM (");
 			pagingSql.append("SELECT ROWNUM AS RNUM, NONPAGINATEDLIST.* FROM (");
@@ -92,6 +92,10 @@ public class WnkAutoPagingInterceptor  implements Interceptor {
 				paramMap.put("LIST_TOT_COUNT", rs.getInt(1));
 				request.setAttribute("LIST_TOT_COUNT", rs.getInt(1));
 			}
+			
+			if(request.getParameter("page") == null)
+				request.setAttribute("page", "1");
+			
 		}catch(Exception e){
 			throw new Exception();
 		}finally{
