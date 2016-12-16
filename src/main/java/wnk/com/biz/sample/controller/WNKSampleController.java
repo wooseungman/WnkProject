@@ -167,7 +167,7 @@ public class WNKSampleController {
 	public String fileDownload(Map<String,Object> paramMap, ModelMap model) throws Throwable {
 		String fileSeq = MapUtils.getString(paramMap, "ATTAFILE_SEQ");
 		if(fileSeq == null || fileSeq.equals("")) return "";
-		model.put("FILE_MODEL", fileService.download(paramMap));
+		model.put("FILE_MODEL", fileService.downloadAttachFile(paramMap));
 		return "fileDownloadView";
 	}
 	
@@ -195,7 +195,7 @@ public class WNKSampleController {
 	
 	@RequestMapping(value = "/sample/excel/sampleExcelUpload.mvc")
 	public @ResponseBody List<Map<String, Object>> sampleExcelUpload(Map<String,Object> paramMap, ModelMap model) throws Throwable {
-		return WnkExcelUtil.excelUploadTempProcess(fileService.getMultiFileList("file"));
+		return WnkExcelUtil.excelUploadTempProcess(fileService.getAttachFileList("file"));
 	}
 	
 	@RequestMapping(value = "/sample/js/sampleAjaxForm.mvc")
