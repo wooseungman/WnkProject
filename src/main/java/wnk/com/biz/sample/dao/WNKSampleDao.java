@@ -34,7 +34,6 @@ public class WNKSampleDao {
     }
      
     public Object selectOne(String queryId, Object params){
-		this.getSqlString(queryId, params);
     	return sqlSession.selectOne(queryId, params);
     }
      

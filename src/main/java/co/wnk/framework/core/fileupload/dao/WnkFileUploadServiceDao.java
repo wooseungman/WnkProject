@@ -4,5 +4,9 @@ import java.util.Map;
 
 public interface WnkFileUploadServiceDao {
 	
-	public void saveUloadFileDao(Map<String,Object> paramMap);
+	public void saveUploadFile(Map<String,Object> paramMap);
+	
+	public String selectUploadFileSeq(Map<String,Object> paramMap);
+	
+	public Map<String,Object> selectUploadFileByFileSeq(Map<String,Object> paramMap);
 }

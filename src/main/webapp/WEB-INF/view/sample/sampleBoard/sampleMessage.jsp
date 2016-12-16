@@ -6,26 +6,23 @@
 </tr>
 <tr>
 	<td align="center" style="padding-top:10px;padding-bottom:10px;">
-		<table cellpadding="1" cellspacing="1" border="0" width="95%" bgcolor="#BBBBBB">
-		<tr height="30">
-			<td align="center" bgcolor="#EEEEEE" width="200"><b>GetMessage</b></td>
-			<td align="left" bgcolor="#FFFFFF">
-				&nbsp;${getMessage}
+		<table style="border:1px solid #EEEEEE;width:95%;">
+		<tr>
+			<td style="width:120px;" class="board_title">GetMessage</td>
+			<td class="board_content al pl10">
+				${getMessage}
 			</td>
 		</tr>
 		<tr height="30">
-			<td align="center" bgcolor="#EEEEEE" width="200"><b>JSTL</b></td>
-			<td align="left" bgcolor="#FFFFFF">
-				&nbsp;
+			<td style="width:120px;" class="board_title">JSTL</td>
+			<td class="board_content al pl5">
 				<spring:message code='hello' var="testMessage1"/>
 				${testMessage1}
 			</td>
-			
 		</tr>
 		<tr height="30">
-			<td align="center" bgcolor="#EEEEEE" width="200"><b>Tag</b></td>
-			<td align="left" bgcolor="#FFFFFF">
-				&nbsp;
+			<td style="width:120px;" class="board_title">Tag</td>
+			<td class="board_content al pl5">
 				<app:message messageCode="hello" />
 			</td>
 		</tr>

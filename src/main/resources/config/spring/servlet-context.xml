@@ -92,6 +92,9 @@
 	<!-- EXCEL DOWNLOAD -->
 	<bean id="excelView" class="co.wnk.framework.core.common.io.WnkExcelView"/>
 	
+	<!-- EXCEL DOWNLOAD -->
+	<bean id="fileDownloadView" class="co.wnk.framework.core.common.io.WnkFileDownloadView"/>
+	
 	<!-- <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>

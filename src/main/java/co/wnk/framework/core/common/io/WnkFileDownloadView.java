@@ -20,13 +20,14 @@ import org.springframework.web.servlet.view.AbstractView;
 
 import co.wnk.framework.core.common.FileModel;
 
-public class FileDownloadView extends AbstractView {
+public class WnkFileDownloadView extends AbstractView {
 
-private static final Logger logger = LoggerFactory.getLogger(FileDownloadView.class);
+private static final Logger logger = LoggerFactory.getLogger(WnkFileDownloadView.class);
 	
 	private static final String CHARSET = "utf-8";
 	
-	public FileDownloadView() {		
+	public WnkFileDownloadView() {		
+	
 	}
 
 	@Override
@@ -34,14 +35,13 @@ private static final Logger logger = LoggerFactory.getLogger(FileDownloadView.cl
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		
-		
 		FileModel fileModel = (FileModel)model.get("FILE_MODEL");
 		File file = fileModel.getFile();
 		FileInputStream is = fileModel.getInputStream();
 		String orgFileName = fileModel.getOrgFileName();
 		
 		try{
-		MagicMatch mm = Magic.getMagicMatch(orgFileName.getBytes(), false);
+			MagicMatch mm = Magic.getMagicMatch(orgFileName.getBytes(), false);
 			response.setContentType(mm.getMimeType()+"; charset="+CHARSET);
 		}catch(MagicMatchNotFoundException me){
 			response.setContentType("application/octet-stream; charset="+CHARSET);

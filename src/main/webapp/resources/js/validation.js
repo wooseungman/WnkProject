@@ -1,13 +1,13 @@
 var validation = new Object();
 
 validation.validateAll = function(){
-	return validation.checkInputValidation($('input,textarea,select'));
+	return validation.checkInputValidation($('input,textarea,select,checkbox,radio'));
 };
 
 validation.validate = function(mother){
 	var elements = [];	
 	
-	$(mother).find('input,textarea,select').each(function(index,target){
+	$(mother).find('input,textarea,select,checkbox,radio').each(function(index,target){
 		elements.push($(target));
 	});
 	

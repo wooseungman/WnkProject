@@ -3,7 +3,7 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#btn_search").on("click",function(){
-		var url = '<c:url value="/sample/boardList.mvc" />';
+		var url = '<c:url value="/sample/sampleBoard/boardList.mvc" />';
 		$("#searchFrm").attr("action",url);
 		$("#searchFrm").submit();
 	})
@@ -14,7 +14,7 @@ $(document).ready(function(){
 		var searchValue = $("#SEARCH_VALUE").val();
 		var page = "${page}";
 		var url = '<c:url value="/sample/sampleBoard/boardDetail.mvc?SEQ=" />'+seq+"&SEARCH_GUBUN="+searchGubun+"&SEARCH_VALUE="+searchValue+"&page="+page;
-		document.location.href=url;
+		common.goLocationUri(url);
 	});
 	
 	$("#btn_register").on("click",function(){
@@ -22,7 +22,7 @@ $(document).ready(function(){
 		var searchValue = $("#SEARCH_VALUE").val();
 		var page = "${page}";
 		var url = '<c:url value="/sample/sampleBoard/boardRegist.mvc" />'+"?SEARCH_GUBUN="+searchGubun+"&SEARCH_VALUE="+searchValue+"&page="+page;
-		document.location.href=url;
+		common.goLocationUri(url);
 	});
 	
 	$("#btn_excel").on("click",function(){
@@ -74,13 +74,13 @@ $(document).ready(function(){
 		</tr>
 		<c:forEach items="${list}" var="list" varStatus="row">
 		<tr>
-			<td class="board_content"><a class="btn_detail" href='#none' seq="${list.SEQ}">${list.SEQ}</a></td>
-			<td class="board_content">${list.ID}</td>
-			<td class="board_content">${list.NAME}</td>
-			<td class="board_content">${list.DESCRIPTION}</td>
-			<td class="board_content">${list.USE_YN}</td>
-			<td class="board_content">${list.REG_USER}</td>
-			<td class="board_content">${list.REG_DATE}</td>
+			<td class="board_content al pl5" style="width:50px;"><a class="btn_detail" href='#none' seq="${list.SEQ}">${list.SEQ}</a></td>
+			<td class="board_content al pl5">${list.ID}</td>
+			<td class="board_content al pl5">${list.NAME}</td>
+			<td class="board_content al pl5">${list.DESCRIPTION}</td>
+			<td class="board_content ac">${list.USE_YN}</td>
+			<td class="board_content al pl5">${list.REG_USER}</td>
+			<td class="board_content ac">${list.REG_DATE}</td>
 		</tr>
 		</c:forEach>
 		</table><br/>

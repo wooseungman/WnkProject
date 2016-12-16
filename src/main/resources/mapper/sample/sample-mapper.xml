@@ -4,22 +4,27 @@
     
     <select id="selectSampleList" parameterType="java.util.Map" resultType="java.util.HashMap">
         SELECT 
-			 SEQ
-			,ID
-			,NAME
-			,DESCRIPTION
-			,USE_YN
-			,REG_USER
-			,REG_DATE
-		FROM GBL_BOARD_SAMPLE
+			 A.SEQ
+			,A.ID
+			,A.NAME
+			,A.DESCRIPTION
+			,A.USE_YN
+			,A.REG_USER
+			,A.REG_DATE
+			,B.ATTAFILE_GROUP_SEQ AS FILE_SEQ
+			,B.ORGNFILE_NM
+		FROM GBL_BOARD_SAMPLE A
+		LEFT OUTER JOIN ATTAFILE_INFO B ON
+		A.FILE_SEQ = B.ATTAFILE_GROUP_SEQ
+		AND B.DEL_CD = 'N'
 		WHERE 1=1
 		<if test="SEARCH_VALUE != null">
-			AND ID LIKE '%${SEARCH_VALUE}%'
+			AND A.ID LIKE '%${SEARCH_VALUE}%'
 		</if>
 		<if test="SEQ != null">
-			AND SEQ = #{SEQ}
+			AND A.SEQ = #{SEQ}
 		</if>
-		ORDER BY SEQ DESC
+		ORDER BY A.SEQ DESC
     </select>
     
     <insert id="insertSample" parameterType="java.util.Map">
@@ -32,6 +37,7 @@
 			,NAME
 			,DESCRIPTION
 			,USE_YN
+			,FILE_SEQ
 			,REG_USER
 			,REG_DATE
         ) VALUES (
@@ -40,6 +46,7 @@
 			,#{NAME}
 			,#{DESCRIPTION}
 			,#{USE_YN}
+			,#{FILE_SEQ}
 			,#{REG_USER}
 			,NOW()
         )
@@ -51,6 +58,9 @@
     		,NAME = #{NAME}
     		,DESCRIPTION = #{DESCRIPTION}
     		,USE_YN = #{USE_YN}
+    		<if test="FILE_SEQ != null">
+    			,FILE_SEQ = #{FILE_SEQ}
+    		</if>
     		,REG_USER = #{REG_USER}
     		,REG_DATE = NOW()
     	WHERE SEQ = #{SEQ}

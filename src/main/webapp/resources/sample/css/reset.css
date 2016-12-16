@@ -14,11 +14,18 @@ blockquote:before, blockquote:after,q:before, q:after{content:'';content:none}
 table{border-collapse:collapse;border-spacing:0;font-size:13px;line-height:1;vertical-align:middle}
 table td{border-collapse:collapse;border-spacing:0;font-size:13px;line-height:1;vertical-align:middle;margin-top:10px;margin-left:10px;height:25px;}
 
-.board_title{font-weight:bold;text-align:center;padding-left:10px;border:1px solid #BBBBBB;background-color:#EEEEEE}
-.board_content{padding-left:10px;border:1px solid #BBBBBB;background-color:#FFFFFF}
+.board_title{text-align:center;font-weight:bold;border:1px solid #BBBBBB;background-color:#EEEEEE}
+.board_content{border:1px solid #BBBBBB;background-color:#FFFFFF}
 .selectbox{width:120px;height:25px;border:1px solid #EEEEEE}
 .inputbox{width:200px;height:20px;border:1px solid #EEEEEE}
 .btn{eight:20px;}
+.al{text-align:left}
+.ac{text-align:center}
+.ar{text-align:right}
+.pl10{padding-left:10px;}
+.pr10{padding-right:10px;}
+.pl5{padding-left:5px;}
+.pr5{padding-right:5px;}
 
 /* common */
 body{background:#dfdfe0;height:100%;font-family:"Nanum Gothic", sans-serif;font-size:13px}

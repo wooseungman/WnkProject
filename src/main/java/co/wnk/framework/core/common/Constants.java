@@ -17,5 +17,5 @@ public class Constants {
 	public static final String error = "system.error";
 	
 	public static final String KEY_ERROR_MESSAGE = "ERROR_MESSAGE";
-	public static final String KEY_RESULTS = "list";
+	public static final String KEY_RESULTS = "list";	
 }

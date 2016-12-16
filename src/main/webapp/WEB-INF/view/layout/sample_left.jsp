@@ -8,13 +8,33 @@
 			<td class="board_title"><b>메뉴</b></td>
 		</tr>
 		<tr>
-			<td class="board_content">
-				<a href='<c:url value="/sample/sampleBoard/boardList.mvc" />'>1. 게시판 샘플</a>
+			<td class="board_content al pl5">
+				<a href='<c:url value="/sample/sampleBoard/boardList.mvc" />'>1. board sample</a>
 			</td>
 		</tr>
 		<tr>
-			<td class="board_content">
-				<a href='<c:url value="/sample/message/sampleMessage.mvc" />'>2. 메세지 가져오기</a>
+			<td class="board_content al pl5">
+				<a href='<c:url value="/sample/message/sampleMessage.mvc" />'>2. message getting</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="board_content al pl5">
+				<a href='<c:url value="/sample/js/sampleJsValidation.mvc" />'>3. js validation</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="board_content al pl5">
+				<a href='<c:url value="/sample/excel/sampleExcelUploadForm.mvc" />'>4. Excel 업로드</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="board_content al pl5">
+				<a href='<c:url value="/sample/js/sampleAjaxForm.mvc" />'>5. Ajax 관련 기능</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="board_content al pl5">
+				<a href='<c:url value="/sample/js/sampleScriptForm.mvc" />'>6. 그 밖에 스크립트</a>
 			</td>
 		</tr>
 		</table>

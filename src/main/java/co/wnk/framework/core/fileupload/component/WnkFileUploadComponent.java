@@ -1,5 +1,6 @@
 package co.wnk.framework.core.fileupload.component;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.apache.commons.collections.MapUtils;
 
+import co.wnk.framework.core.common.FileModel;
 import co.wnk.framework.core.common.util.config.ApplicationProperty;
 import co.wnk.framework.core.common.util.file.FileUploadutil;
 import co.wnk.framework.core.fileupload.component.ThumnailerComponent;
@@ -35,8 +38,12 @@ public class WnkFileUploadComponent {
 	}
 	
 	
-	public Map<String, Object> uploadFile(Map<String, Object> paramMap, String fileName, HttpServletRequest request) throws Throwable{
-		Map<String, Object> result = null;
+	public String uploadFile(Map<String, Object> paramMap, String fileName, HttpServletRequest request) throws Throwable{
+		String fileSeq = null;
+		String fileGroupSeq = null;
+		String fileType = null;
+		String result = null;
+		
 		List<MultipartFile> fileList = this.getMultiFileList(fileName, request);
 		if(fileList == null) return null;
 		
@@ -57,19 +64,18 @@ public class WnkFileUploadComponent {
 			String ATTAFILE_SIZE = (String)fileMap.get(FileIO.SAVED_FILE_SIZE);
 			String ATTAFILE_PATH = ApplicationProperty.get("upload.path");
 			
-			System.out.println("ATTAFILE_TP : " + ATTAFILE_TP);
-			System.out.println("ORGNFILE_NM : " + ORGNFILE_NM);
-			System.out.println("ATTAFILE_NM : " + ATTAFILE_NM);
-			System.out.println("ATTAFILE_SIZE : " + ATTAFILE_SIZE);
-			System.out.println("ATTAFILE_PATH : " + ATTAFILE_PATH);
-			
-			String fileType = FileUploadutil.getFileType(fileNameExt);
+			fileType = FileUploadutil.getFileType(fileNameExt);
 			
 			if(fileType.equals("IMAGE"))
 				thumnailer.createThumbnail(ATTAFILE_PATH+ATTAFILE_NM, ATTAFILE_PATH+"thumb_"+ATTAFILE_NM, 500, 500);
 			
+			fileSeq = dao.selectUploadFileSeq(paramMap);
+			if(fileGroupSeq == null)
+				fileGroupSeq = fileSeq;
+			
 			Map<String, Object> attaMap = new HashMap<String, Object>();
-			attaMap.put("SOURCE_UNIQUE_SEQ", paramMap.get("SOURCE_UNIQUE_SEQ"));
+			attaMap.put("ATTAFILE_SEQ", fileSeq);
+			attaMap.put("ATTAFILE_GROUP_SEQ", fileGroupSeq);
 			attaMap.put("ATTAFILE_TP", ATTAFILE_TP);
 			attaMap.put("ORGNFILE_NM", ORGNFILE_NM);
 			attaMap.put("ATTAFILE_NM", ATTAFILE_NM);
@@ -77,11 +83,24 @@ public class WnkFileUploadComponent {
 			attaMap.put("ATTAFILE_PATH", ATTAFILE_PATH);
 			attaMap.put("DEL_CD", paramMap.get("DEL_CD") != null && !paramMap.get("DEL_CD").equals("") ? paramMap.get("DEL_CD") : "N" );
 			attaMap.put("ATTAFILE_SIZE", ATTAFILE_SIZE);
-			dao.saveUloadFileDao(attaMap);
-			result = attaMap;
+			dao.saveUploadFile(attaMap);
+			result = fileGroupSeq;
 		}
-		
 		return result;
+	}
+	
+	public FileModel getAttachFileByAttaFileSeq(Map<String, Object> paramMap){
+		Map<String,Object> info = dao.selectUploadFileByFileSeq(paramMap);
+		
+		String ATTA_FILE_PATH = (String)info.get("ATTAFILE_PATH");
+		String ORGN_FILE_NM = MapUtils.getString(info, "ORGNFILE_NM");
+		String ATTA_FILE_NM = MapUtils.getString(info, "ATTAFILE_NM");
+		
+		System.out.println("ATTA_FILE_PATH : " + ATTA_FILE_PATH);
+		System.out.println("ORGN_FILE_NM : " + ORGN_FILE_NM);
+		System.out.println("ATTA_FILE_NM : " + ATTA_FILE_NM);
+		
+		return new FileModel(new File(ATTA_FILE_PATH + File.separator + ATTA_FILE_NM), ORGN_FILE_NM);
 	}
 	
 	public void setDao(WnkFileUploadServiceDao dao) {

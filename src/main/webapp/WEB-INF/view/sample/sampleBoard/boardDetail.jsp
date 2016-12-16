@@ -33,42 +33,48 @@ $(document).ready(function(){
 		<input type="hidden" name="page" value="${param.page}" />
 		<input type="hidden" name="SEARCH_GUBUN" value="${param.SEARCH_GUBUN}" />
 		<input type="hidden" name="SEARCH_VALUE" value="${param.SEARCH_VALUE}" />
-		<input type="hidden" name="SEQ" value="${detail.SEQ}" />
+		<input type="hidden" name="SEQ" value="${list.SEQ}" />
 		<table style="border:1px solid #EEEEEE;width:95%;">
-		<tr>
+		<tr height="30">
 			<td style="width:120px;" class="board_title">SEQ</td>
-			<td class="board_content">
-				${detail.SEQ}
+			<td class="board_content al pl5">
+				${list.SEQ}
 			</td>
 		</tr>
-		<tr>
-			<td style="width:120px;" class="board_title">ID</td>
-			<td class="board_content">
-				${detail.ID}
+		<tr height="30">
+			<td class="board_title">ID</td>
+			<td class="board_content al pl5">
+				${list.ID}
 			</td>
 		</tr>
 		<tr height="30">
 			<td class="board_title">NAME</td>
-			<td class="board_content">
-				${detail.NAME}
+			<td class="board_content al pl5">
+				${list.NAME}
 			</td>
 		</tr>
 		<tr height="30">
 			<td class="board_title">DESCRIPTION</td>
-			<td class="board_content">
-				${detail.DESCRIPTION}
+			<td class="board_content al pl5">
+				${list.DESCRIPTION}
 			</td>
 		</tr>
 		<tr height="30">
 			<td class="board_title">USE_YN</td>
-			<td class="board_content">
-				${detail.USE_YN}
+			<td class="board_content al pl5">
+				${list.USE_YN}
 			</td>
 		</tr>
 		<tr height="30">
 			<td class="board_title">REG_USER</td>
-			<td class="board_content">
-				${detail.REG_USER}
+			<td class="board_content al pl5">
+				${list.REG_USER}
+			</td>
+		</tr>
+		<tr height="30">
+			<td class="board_title">UPLOAD FILE</td>
+			<td class="board_content al pl5">
+				<a href="<c:url value="/common/fileDownload.mvc?ATTAFILE_SEQ=${list.FILE_SEQ}" />">${list.ORGNFILE_NM}</a>
 			</td>
 		</tr>
 		</table>
