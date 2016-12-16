@@ -26,4 +26,11 @@ public class WnkSampleFileUploadServiceDao implements WnkFileUploadServiceDao {
 		return (Map<String, Object>) dao.selectOne("file.selectAttachFileList", paramMap);
 	}
 	
+	@Override
+	public int deleteUploadFileByFileSeq(Map<String, Object> paramMap) {
+		return (int) dao.selectOne("file.deleteAttachFile", paramMap);
+	}
+	
+	
+	
 }

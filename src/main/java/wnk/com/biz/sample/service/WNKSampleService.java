@@ -7,11 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import wnk.com.biz.common.service.FileUploadService;
 import wnk.com.biz.sample.dao.WNKSampleDao;
-import co.wnk.framework.core.dao.vo.WnkRowBounds;
 
 @Service
 public class WNKSampleService {
@@ -44,12 +42,12 @@ public class WNKSampleService {
 	}
 	
 	public int insertBoardArticle(Map<String,Object> paramMap) throws Throwable{
-		paramMap.put("FILE_SEQ", uploadService.upLoad(paramMap, "file"));
+		paramMap.put("FILE_SEQ", uploadService.upLoadAttachFile(paramMap, "file"));
 		return (Integer) dao.insert("sample.insertSample", paramMap);
 	}
 	
 	public int updateBoardArticle(Map<String,Object> paramMap) throws Throwable{
-		paramMap.put("FILE_SEQ", uploadService.upLoad(paramMap, "file"));
+		paramMap.put("FILE_SEQ", uploadService.upLoadAttachFile(paramMap, "file"));
 		return (Integer) dao.insert("sample.updateSample", paramMap);
 	}
 }

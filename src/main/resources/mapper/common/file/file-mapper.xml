@@ -70,5 +70,11 @@
 			WHERE ATTAFILE_NM = #{ATTAFILE_NM}
 		</if>
 	</select>
+	
+	<update id="deleteAttachFile" parameterType="java.util.Map">
+		UPDATE ATTAFILE_INFO SET
+			DEL_CD = 'Y'
+		WHERE ATTAFILE_SEQ = #{ATTAFILE_SEQ}
+	</update>
    	
 </mapper>

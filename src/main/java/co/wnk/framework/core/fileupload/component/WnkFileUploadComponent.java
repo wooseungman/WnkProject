@@ -89,7 +89,7 @@ public class WnkFileUploadComponent {
 		return result;
 	}
 	
-	public FileModel getAttachFileByAttaFileSeq(Map<String, Object> paramMap){
+	public FileModel getAttachFile(Map<String, Object> paramMap){
 		Map<String,Object> info = dao.selectUploadFileByFileSeq(paramMap);
 		
 		String ATTA_FILE_PATH = (String)info.get("ATTAFILE_PATH");
@@ -101,6 +101,10 @@ public class WnkFileUploadComponent {
 		System.out.println("ATTA_FILE_NM : " + ATTA_FILE_NM);
 		
 		return new FileModel(new File(ATTA_FILE_PATH + File.separator + ATTA_FILE_NM), ORGN_FILE_NM);
+	}
+	
+	public int removeAttachFile(Map<String, Object> paramMap){
+		return dao.deleteUploadFileByFileSeq(paramMap);
 	}
 	
 	public void setDao(WnkFileUploadServiceDao dao) {
