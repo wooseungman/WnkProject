@@ -10,16 +10,16 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import co.wnk.framework.core.security.vo.User;
-import wnk.com.biz.common.service.SecurityUserService;
 import co.wnk.framework.core.common.util.WnkEncryptionUtil;
 
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CustomAuthenticationProvider.class);
-	private SecurityUserService userService;
+	private UserDetailsService userService;
 	
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		User user = null;
@@ -32,8 +32,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         Collection<? extends GrantedAuthority> authorities;
 
         try {
-
-        	user = userService.loadUserByUsername(username);
+        	user = (User) userService.loadUserByUsername(username);
             String inputPasswd = WnkEncryptionUtil.enCryptionAes128(password).trim();
                         
             if(user == null)
@@ -61,7 +60,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		return true;
 	}
 
-	public void setUserService(SecurityUserService userService) {
+	public void setUserService(UserDetailsService userService) {
 		this.userService = userService;
 	}
 }
