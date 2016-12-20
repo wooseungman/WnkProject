@@ -31,40 +31,45 @@ $(document).ready(function(){
 		<tr>
 			<td style="width:120px;" class="board_title">ID</td>
 			<td class="board_content al pl5" style="height:30px;">
-				<input type="text" id="ID" name="ID" value="${detail.ID}" class="inputbox" ${not empty detail ? 'readonly':''} />
+				<input type="text" id="ID" name="ID" value="${list.ID}" class="inputbox" ${not empty list ? 'readonly':''} />
 			</td>
 		</tr>
 		<tr height="30">
 			<td class="board_title">NAME</td>
 			<td class="board_content al pl5" style="height:30px;">
-				<input type="text" id="NAME" name="NAME" value="${detail.NAME}" class="inputbox" />
+				<input type="text" id="NAME" name="NAME" value="${list.NAME}" class="inputbox" />
 			</td>
 		</tr>
 		<tr height="30">
 			<td class="board_title">DESCRIPTION</td>
 			<td class="board_content al pl5" style="height:30px;padding-top:5px;padding-bottom:5px;">
-				<textarea id="DESCRIPTION" name="DESCRIPTION" class="inputbox" style="width:400px;height:200px;">${detail.DESCRIPTION}</textarea>
+				<textarea id="DESCRIPTION" name="DESCRIPTION" class="inputbox" style="width:400px;height:200px;">${list.DESCRIPTION}</textarea>
 			</td>
 		</tr>
 		<tr height="30">
 			<td class="board_title">USE_YN</td>
 			<td class="board_content al pl5">
 				<select id="USE_YN" name="USE_YN" class="selectbox">
-					<option value="Y" ${detail.USE_YN eq 'Y' ? 'selected':''}>사용</option>
-					<option value="N" ${detail.USE_YN eq 'N' ? 'selected':''}>미사용</option>
+					<option value="Y" ${list.USE_YN eq 'Y' ? 'selected':''}>사용</option>
+					<option value="N" ${list.USE_YN eq 'N' ? 'selected':''}>미사용</option>
 				</select>
 			</td>
 		</tr>
 		<tr height="30">
 			<td class="board_title">REG_USER</td>
 			<td class="board_content al pl5" style="height:30px;">
-				<input type="text" id="REG_USER" name="REG_USER" value="${detail.REG_USER}" class="inputbox" />
+				<input type="text" id="REG_USER" name="REG_USER" value="${list.REG_USER}" class="inputbox" />
 			</td>
 		</tr>
 		<tr height="30">
 			<td class="board_title">FILE</td>
 			<td class="board_content al pl5" style="height:30px;">
-				<input type="file" name="file" value="" />
+				<c:if test="${not empty list.ORGNFILE_NM}">
+					${list.ORGNFILE_NM}
+				</c:if>
+				<c:if test="${empty list.ORGNFILE_NM}">
+					<input type="file" name="file" value="" />
+				</c:if>
 			</td>
 		</tr>
 		</table>

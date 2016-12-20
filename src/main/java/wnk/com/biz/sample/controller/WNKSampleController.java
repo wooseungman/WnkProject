@@ -1,34 +1,26 @@
 package wnk.com.biz.sample.controller;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
-import java.util.UUID;
 
 import org.apache.commons.collections.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.encoding.PasswordEncoder;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import co.wnk.framework.core.common.AsyncResponseMap;
 import co.wnk.framework.core.common.Constants;
-import co.wnk.framework.core.common.FileModel;
 import co.wnk.framework.core.common.util.WnkExcelUtil;
 import co.wnk.framework.core.common.util.WnkStringUtil;
 import co.wnk.framework.core.common.util.message.WnkMessageProperty;
 import wnk.com.biz.common.service.FileUploadService;
 import wnk.com.biz.sample.service.WNKSampleService;
-import co.wnk.framework.core.security.vo.User;
 
 @Controller
 public class WNKSampleController {
@@ -43,9 +35,10 @@ public class WNKSampleController {
 	 * 샘플 페이지 메인
 	 * @param paramMap
 	 * @param model
+	 * @throws Exception 
 	 */
 	@RequestMapping(value = "/sample/sampleMain.mvc")
-	public void sampleMain(Map<String,Object> paramMap, ModelMap model) {
+	public void sampleMain(Map<String,Object> paramMap, ModelMap model,Locale locale) throws Exception {
 	
 	}
 	
@@ -214,4 +207,13 @@ public class WNKSampleController {
 	
 	}
 	
+	@RequestMapping(value = "/sample/login/login.mvc")
+	public void login(Map<String,Object> paramMap, ModelMap model) throws Throwable {
+		
+	}
+	
+	@RequestMapping(value = "/sample/login/loginDetail.mvc")
+	public void loginDetail(Map<String,Object> paramMap, ModelMap model) throws Throwable {
+		
+	}
 }

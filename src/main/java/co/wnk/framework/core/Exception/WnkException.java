@@ -1,6 +1,8 @@
 
 package co.wnk.framework.core.Exception;
 
+import co.wnk.framework.core.common.util.message.WnkMessageProperty;
+
 public class WnkException extends Exception {
 	
 	private static final long serialVersionUID = 1L;
@@ -11,7 +13,11 @@ public class WnkException extends Exception {
 	}
 	
 	public WnkException(String message) {
-		this.setExceptionMessage(message);
+		this.setExceptionMessage(WnkMessageProperty.getMessage(message));
+	}
+	
+	public WnkException(String message, Object[] args) {
+		this.setExceptionMessage(WnkMessageProperty.getMessage(message, args));
 	}
 	
 	@Override

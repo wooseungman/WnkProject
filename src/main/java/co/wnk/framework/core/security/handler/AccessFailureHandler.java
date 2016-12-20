@@ -8,12 +8,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
 public class AccessFailureHandler implements AccessDeniedHandler {
 	
-	//private static final Logger logger = LoggerFactory.getLogger(AccessFailureHandler.class);
+	private static final Logger logger = LoggerFactory.getLogger(AccessFailureHandler.class);
 	
 	private String errorPage;
 

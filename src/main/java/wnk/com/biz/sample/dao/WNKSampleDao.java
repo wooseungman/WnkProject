@@ -36,7 +36,7 @@ public class WNKSampleDao {
     public Object selectOne(String queryId, Object params){
     	return sqlSession.selectOne(queryId, params);
     }
-     
+    
     @SuppressWarnings("rawtypes")
     public List selectList(String queryId){
         return sqlSession.selectList(queryId);

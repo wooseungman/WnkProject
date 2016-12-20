@@ -32,9 +32,23 @@
 				<a href='<c:url value="/sample/js/sampleAjaxForm.mvc" />'>5. Ajax 관련 기능</a>
 			</td>
 		</tr>
+		<c:if test="${empty sessionScope.memberInfo}">
 		<tr>
 			<td class="board_content al pl5">
-				<a href='<c:url value="/sample/js/sampleScriptForm.mvc" />'>6. 그 밖에 스크립트</a>
+				<a href='<c:url value="/sample/login/login.mvc" />'>6. 로그인</a>
+			</td>
+		</tr>
+		</c:if>
+		<c:if test="${not empty sessionScope.memberInfo}">
+		<tr>
+			<td class="board_content al pl5">
+				<a href='<c:url value="/sample/login/loginDetail.mvc" />'>6. 사용자 정보</a>
+			</td>
+		</tr>
+		</c:if>
+		<tr>
+			<td class="board_content al pl5">
+				<a href='<c:url value="/sample/js/sampleScriptForm.mvc" />'>7. 그 밖에 스크립트</a>
 			</td>
 		</tr>
 		</table>

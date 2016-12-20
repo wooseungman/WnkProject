@@ -11,7 +11,7 @@
     <meta name="author" content="">
     <title>WnkFrameWork Sample Page</title>
 </head>
-<body>
+<body style="background-color:#FFFFFF;">
 	<table style="width:100%;background-color:#FFFFFF;">
 	<tr>
 		<td align="center">

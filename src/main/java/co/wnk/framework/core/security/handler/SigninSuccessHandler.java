@@ -22,6 +22,10 @@ public class SigninSuccessHandler extends SavedRequestAwareAuthenticationSuccess
 		HttpSession session = request.getSession(true);
 		session.setAttribute("memberInfo", authentication.getPrincipal());
 		
+		System.out.println("accept :" + accept);
+		
+		
+		
 		if( StringUtils.indexOf(accept, "html") > -1 ) {
 
             super.onAuthenticationSuccess(request, response, authentication);

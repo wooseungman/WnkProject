@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="ko-kr">
 <head>
@@ -7,80 +7,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <title>Wnk Project Sample</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="/bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- MetisMenu CSS -->
-    <link href="/bootstrap/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="/bootstrap/dist/css/sb-admin-2.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="/bootstrap/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
+    <title>WnkFrameWork Login Page</title>
+    <link href="<c:url value="/resources/sample/css/reset.css"/>" rel="stylesheet" type="text/css">
+	<script type="text/javascript" charset="UTF-8" src="<c:url value="/resources/js/jquery-1.11.2.min.js"/>"></script>
+	<script type="text/javascript" charset="UTF-8" src="<c:url value="/resources/js/common.js"/>"></script>
+	<script type="text/javascript" charset="UTF-8" src="<c:url value="/resources/js/validation.js"/>"></script>
+	<script type="text/javascript" charset="UTF-8" src="<c:url value="/resources/js/StringUtil.js"/>"></script>
+	<script type="text/javascript" charset="UTF-8" src="<c:url value="/resources/js/jquery.form.js"/>"></script>
 </head>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#btn_save").on("click",function(){
+		$("#registFrm").submit();
+	});
+});
+</script>
 
-<body>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 col-md-offset-4">
-                <div class="login-panel panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Please Sign In</h3>
-                    </div>
-                    <div class="panel-body">
-                        <form id="loginFrm" name="loginFrm" role="form" action="/sample/login/login_ok" method="post">
-                            <fieldset>
-                                <div class="form-group">
-                                    <input class="form-control" placeholder="user_id" name="user_id" type="text" autofocus value="test">
-                                </div>
-                                <div class="form-group">
-                                    <input class="form-control" placeholder="Password" name="password" type="password" value="test">
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input name="remember" type="checkbox" value="Remember Me">Remember Me
-                                    </label>
-                                </div>
-                                <!-- Change this to a button or input when using this as a form -->
-                                <a id="btn_submit" href="#none" class="btn btn-lg btn-success btn-block">Login</a>
-                            </fieldset>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- jQuery -->
-    <script src="/bootstrap/vendor/jquery/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="/bootstrap/vendor/bootstrap/js/bootstrap.min.js"></script>
-
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="/bootstrap/vendor/metisMenu/metisMenu.min.js"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script src="/bootstrap/dist/js/sb-admin-2.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-			$("#btn_submit").on("click",function(){
-				$("#loginFrm").submit();
-			});
-		});
-	</script>
+<body style="background-color:#FFFFFF;">
+	<table style="width:100%;background-color:#FFFFFF;">
+	<tr>
+		<td align="center">
+			<table style="width:1000px;border:1px solid #EEEEEE;">
+			<tr>
+				<td colspan="2" style="vertical-align:top;border:1px solid #EEEEEE;height:100px;">
+				</td>
+			</tr>
+			<tr>
+				<td style="vertical-align:top;padding-top:35px;width:20%;">
+					
+				</td>
+				<td style="vertical-align:top;width:80%;"><br/><br/>
+					<form id="registFrm" name="loginFrm" method="post" action="/sample/login/login_ok">
+					<table>
+					<tr height="30">
+						<td class="board_title" style="width:120px">ID</td>
+						<td class="board_content al pl5" style="width:300px;height:30px;">
+							<input type="text" placeholder="user_id" name="user_id" class="inputbox" style="height:25px;" data-fixed="true" title="아이디" />
+						</td>
+						<td rowspan="2" style="padding-left:10px;">
+							<input id="btn_save" name="btn_save" type="button" value="Login" class="btn" style="width:100px;height:100px;" data-fixed="true" title="비밀번호" />
+						</td>
+					</tr>
+					<tr height="30">
+						<td class="board_title">PASSWORD</td>
+						<td class="board_content al pl5" style="height:30px;">
+							<input placeholder="password" id="user_passwd" name="user_passwd" type="password" class="inputbox" style="height:25px;"/>
+						</td>
+					</tr>
+					</table>
+					</form>
+					<br/>
+					<br/><br/>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" style="height:100px;border:1px solid #EEEEEE;">
+					
+				</td>
+			</tr>
+			</table>
+		</td>
+	</tr>
+	</table>
 </body>
 </html>

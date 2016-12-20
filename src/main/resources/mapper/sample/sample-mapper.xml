@@ -77,4 +77,56 @@
         	 #{title}
         )
     </insert>
+    
+    <select id="selectMemberInfo" parameterType="java.util.Map" resultType="co.wnk.framework.core.security.vo.User">
+    	SELECT
+    		 ID
+			,PASSWD
+			,NAME
+			,MEMBER_TYPE_CODE
+			,FIRST_CLASS_CODE
+			,MEMBER_CLASS_CODE
+			,JOIN_TYPE_CODE
+			,BIRTH_DAY
+			,BIRTH_TYPE_CODE
+			,GENDER
+			,PERSONAL_EMAIL
+			,PHONE
+			,MOBILE
+			,ZIPCODE
+			,BASIC_ADDRESS
+			,DETAIL_ADDRESS
+			,BANK_CODE
+			,ACCOUNT_NUMBER
+			,EMAIL_YN
+			,SMS_YN 
+			,IPIN_NUMBER
+			,IPIN_SSN_HASH
+			,JOIN_DATE
+			,JOIN_IP
+			,MOD_DATE
+			,MOD_IP
+			,LOGIN_COUNT
+			,LATEST_LOGIN_DATE
+			,LATEST_LOGIN_IP
+			,FIRST_ORDER_YN
+			,FIRST_ORDER_DATE
+			,POINT
+			,SECEDE_YN
+			,SECEDE_TYPE_CODE
+			,SECEDE_DETAIL
+			,SECEDE_ID
+			,SECEDE_DATE
+			,SECEDE_IP
+			,BROKER_BGMALL_CODE
+			,GROUP_ID
+		FROM GBL_MEMBER
+		WHERE 1=1
+		<if test="user_id != null">
+			AND ID = #{user_id}
+		</if>
+		<if test="user_nam != null">
+			AND NAME = #{user_nam}
+		</if>
+    </select> 
 </mapper>

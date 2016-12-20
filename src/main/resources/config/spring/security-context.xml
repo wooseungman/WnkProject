@@ -3,16 +3,22 @@
      xmlns="http://www.springframework.org/schema/security"
      xmlns:beans="http://www.springframework.org/schema/beans"
      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:context="http://www.springframework.org/schema/context"
      xsi:schemaLocation="
      http://www.springframework.org/schema/beans
      http://www.springframework.org/schema/beans/spring-beans.xsd
      http://www.springframework.org/schema/security
-     http://www.springframework.org/schema/security/spring-security.xsd">
-
-     
+     http://www.springframework.org/schema/security/spring-security.xsd
+     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+	
+	<context:component-scan base-package="wnk.com.biz.." use-default-filters="false">
+    	<context:include-filter expression="org.springframework.stereotype.Service" type="annotation" />
+    	<context:include-filter expression="org.springframework.stereotype.Repository" type="annotation" />
+    </context:component-scan>
+	
 	<http auto-config="true" use-expressions="true">
     	<form-login login-page="/sample/login/login.mvc" username-parameter="user_id" 
-    		password-parameter="password"
+    		password-parameter="user_passwd"
     		login-processing-url="/sample/login/login_ok"
     		authentication-success-handler-ref="signinSuccessHandler"
     		authentication-failure-handler-ref="signinFailureHandler"
@@ -38,20 +44,10 @@
 		<beans:property name="errorPage" value="/403" />
 	</beans:bean>
 	
-	<beans:bean id="userService" class="co.wnk.framework.core.security.service.UserService" />
 	<beans:bean id="customAuthenticationProvider" class="co.wnk.framework.core.security.provider.CustomAuthenticationProvider" />
-	<beans:bean id="encoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder" />
-    <beans:bean id="saltSource" class="org.springframework.security.authentication.dao.ReflectionSaltSource">
-        <beans:property name="userPropertyToUse" value="username" />
-    </beans:bean>
     
     <authentication-manager alias="authenticationManager">
     	<authentication-provider ref="customAuthenticationProvider" />
-    	<authentication-provider user-service-ref="userService">
-        	<password-encoder ref="encoder">
-            	<salt-source ref="saltSource" />
-        	</password-encoder>
-    	</authentication-provider>
 	</authentication-manager>
-     
+	
 </beans:beans>

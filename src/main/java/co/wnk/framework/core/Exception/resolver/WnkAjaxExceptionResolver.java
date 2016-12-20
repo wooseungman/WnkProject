@@ -12,6 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 
 import co.wnk.framework.core.Exception.WnkException;
+import co.wnk.framework.core.common.Constants;
+import co.wnk.framework.core.common.util.message.WnkMessageProperty;
 
 public class WnkAjaxExceptionResolver implements HandlerExceptionResolver,Ordered {
 	
@@ -35,7 +37,7 @@ public class WnkAjaxExceptionResolver implements HandlerExceptionResolver,Ordere
 			WnkException ex = (WnkException) exception;
 			exMap.put("MESSAGE",ex.getExceptionMessage());
 		}else{
-			exMap.put("MESSAGE","전송에 실패하였습니다.");
+			exMap.put("MESSAGE",WnkMessageProperty.getMessage(Constants.KEY_ERROR_MESSAGE));
 		}
 		
 		return new ModelAndView(view, exMap);

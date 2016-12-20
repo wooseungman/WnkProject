@@ -20,8 +20,7 @@ $(document).ready(function(){
 		<tr>
 			<td style="width:120px;" class="board_title">JSTL</td>
 			<td class="board_content al pl5">
-				<spring:message code='hello' var="testMessage1"/>
-				${testMessage1}
+				<spring:message code='hello'/> 
 			</td>
 		</tr>
 		<tr height="30">
@@ -30,7 +29,11 @@ $(document).ready(function(){
 				<app:message messageCode="hello" />
 			</td>
 		</tr>
-		</table>
+		</table><br/>
+		
+		<a href="<c:url value="/sample/message/sampleMessage.mvc?lang=ko" />"><input type="button" name="btn_ko" value="한국어"></a>
+		<a href="<c:url value="/sample/message/sampleMessage.mvc?lang=en" />"><input type="button" name="btn_en" value="영 어"></a>
+		<a href="<c:url value="/sample/message/sampleMessage.mvc?lang=ja" />"><input type="button" name="btn_ja" value="일본어"></a>
 		<br/>
 	</td>
 </tr>
