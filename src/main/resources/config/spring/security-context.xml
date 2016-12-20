@@ -44,7 +44,13 @@
 		<beans:property name="errorPage" value="/403" />
 	</beans:bean>
 	
-	<beans:bean id="customAuthenticationProvider" class="co.wnk.framework.core.security.provider.CustomAuthenticationProvider" />
+	
+	<beans:bean id="userService" class="wnk.com.biz.common.service.SecurityUserService" />
+	
+	<beans:bean id="customAuthenticationProvider" class="co.wnk.framework.core.security.provider.CustomAuthenticationProvider">
+		<beans:property name="userService" ref="userService" />
+	</beans:bean>
+	
     
     <authentication-manager alias="authenticationManager">
     	<authentication-provider ref="customAuthenticationProvider" />
