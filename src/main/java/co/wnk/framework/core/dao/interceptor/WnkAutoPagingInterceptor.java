@@ -25,9 +25,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 @SuppressWarnings("unchecked")
 @Intercepts({ @Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class }) })
-public class WnkAutoPagingInterceptor  implements Interceptor {
+public class WnkAutoPagingInterceptor implements Interceptor {
 	
-    public Object intercept(Invocation invocation) throws Throwable {
+	@Override
+	public Object intercept(Invocation invocation) throws Throwable {
     	
     	StatementHandler handler = (StatementHandler)invocation.getTarget();
     	Map<String,Object> paramMap = (Map<String, Object>) (handler.getParameterHandler().getParameterObject() != null ? handler.getParameterHandler().getParameterObject() : "");
@@ -84,7 +85,7 @@ public class WnkAutoPagingInterceptor  implements Interceptor {
 		ResultSet rs = null;
 		
 		try{
-			countSql.append("SELECT COUNT(1) TOTAL_ROWS_COUNT FROM (").append(sql).append(") AUTO_COUNT");
+			countSql.append("SELECT COUNT(1) TOTAL_ROWS_COUNT FROM (").append(sql).append(") TABLE_COUNT");
 			Connection connection = (Connection) invocation.getArgs()[0];
 			countStmt = connection.prepareStatement(countSql.toString());
 			rs = countStmt.executeQuery();

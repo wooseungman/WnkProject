@@ -26,9 +26,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		
 		String username = authentication.getName();
         String password = (String) authentication.getCredentials();
-        System.out.println("input username : " + username);
-        System.out.println("input password : " + password);
-        
         Collection<? extends GrantedAuthority> authorities;
 
         try {

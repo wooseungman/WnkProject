@@ -59,6 +59,8 @@ public class User implements UserDetails {
     private String secede_ip;
     private String broker_bgmall_code;
     private String group_id;
+    private String member_role;
+    private String language_code;
 
     public String getUsername() {
         return username;
@@ -438,5 +440,21 @@ public class User implements UserDetails {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getMember_role() {
+		return member_role;
+	}
+
+	public void setMember_role(String member_role) {
+		this.member_role = member_role;
+	}
+
+	public String getLanguage_code() {
+		return language_code;
+	}
+
+	public void setLanguage_code(String language_code) {
+		this.language_code = language_code;
 	}
 }

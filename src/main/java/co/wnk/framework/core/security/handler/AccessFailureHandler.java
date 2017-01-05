@@ -19,8 +19,7 @@ public class AccessFailureHandler implements AccessDeniedHandler {
 	
 	private String errorPage;
 
-    public AccessFailureHandler() {
-    }
+    public AccessFailureHandler() { }
 
     public AccessFailureHandler(String errorPage) {
         this.errorPage = errorPage;
@@ -34,28 +33,49 @@ public class AccessFailureHandler implements AccessDeniedHandler {
         this.errorPage = errorPage;
     }
 
-    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException exception) throws IOException, ServletException {
+    public void handle(HttpServletRequest request, HttpServletResponse response, 
+    		AccessDeniedException exception) throws IOException, ServletException {
 
+    	String error = "true";
+    	String message = exception.getMessage();
         String accept = request.getHeader("accept");
 
-        String error = "true";
-        String message = exception.getMessage();
-
-        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-        response.setCharacterEncoding("UTF-8");
+        if( StringUtils.indexOf(accept, "html") > -1 ) {
+        	request.setAttribute("error", error);
+        	request.setAttribute("message", exception);
+        	request.getRequestDispatcher(errorPage).forward(request, response);
+        } else if( StringUtils.indexOf(accept, "xml") > -1 ) {
+        	response.setContentType("application/xml");
+            response.setCharacterEncoding("utf-8");
 
             String data = StringUtils.join(new String[] {
-                " { \"response\" : {",
-                " \"error\" : " , error , ", ",
-                " \"message\" : \"", message , "\" ",
-                "} } "
+                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
+                 "<response>",
+                 "<error>"+error+"</error>",
+                 "<message>"+message+"</message>",
+                 "</response>"
             });
 
             PrintWriter out = response.getWriter();
             out.print(data);
             out.flush();
             out.close();
+        } else if( StringUtils.indexOf(accept, "json") > -1 ) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            response.setCharacterEncoding("UTF-8");
 
+            String data = StringUtils.join(new String[] {
+            	" { \"response\" : {",
+            	" \"error\" : " , error , ", ",
+            	" \"message\" : \"", message , "\" ",
+            	"} } "
+            });
+            
+            PrintWriter out = response.getWriter();
+            out.print(data);
+            out.flush();
+            out.close();
+        }
     }
 
 }

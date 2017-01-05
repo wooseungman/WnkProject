@@ -2,6 +2,7 @@ package co.wnk.framework.core.security.handler;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Locale;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.support.RequestContextUtils;
 import org.apache.commons.lang.StringUtils;
 
 public class SigninSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler{
@@ -21,11 +24,6 @@ public class SigninSuccessHandler extends SavedRequestAwareAuthenticationSuccess
 		String accept = request.getHeader("accept");
 		HttpSession session = request.getSession(true);
 		session.setAttribute("memberInfo", authentication.getPrincipal());
-		
-		System.out.println("accept :" + accept);
-		
-		
-		
 		if( StringUtils.indexOf(accept, "html") > -1 ) {
 
             super.onAuthenticationSuccess(request, response, authentication);
