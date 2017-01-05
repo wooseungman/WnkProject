@@ -39,13 +39,11 @@
 			</td>
 		</tr>
 		</c:if>
-		<c:if test="${not empty sessionScope.memberInfo}">
 		<tr>
 			<td class="board_content al pl5">
 				<a href='<c:url value="/sample/login/loginDetail.mvc" />'>6. 사용자 정보</a>
 			</td>
 		</tr>
-		</c:if>
 		<tr>
 			<td class="board_content al pl5">
 				<a href='<c:url value="/sample/js/sampleScriptForm.mvc" />'>7. 그 밖에 스크립트</a>

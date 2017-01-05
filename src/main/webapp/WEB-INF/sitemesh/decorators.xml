@@ -3,7 +3,7 @@
     <excludes>
         <pattern>/*.json</pattern>
         <pattern>/*.html</pattern>
-        <pattern>/sample/login/login.mvc</pattern>
+        <pattern>/sample/login/login.mvc*</pattern>
         <pattern>/index.jsp</pattern>
     </excludes>
     
