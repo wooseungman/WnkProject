@@ -44,6 +44,10 @@
     </beans:bean> -->
     
     <beans:bean id="loginSuccessHandler" class="co.wnk.framework.core.security.handler.LoginSuccessHandler">
+    	<beans:property name="strategy" ref="securityRedirectStrategy" />
+    </beans:bean>
+    
+    <beans:bean id="securityRedirectStrategy" class="co.wnk.framework.core.security.handler.SecurityRedirectStrategy">
     	<beans:property name="targetUrlParameter" value="loginRedirect" />
 		<beans:property name="useReferer" value="false" />
 		<beans:property name="defaultUrl" value="/sample/sampleMain.mvc" />
