@@ -17,5 +17,10 @@ public class Constants {
 	public static final String error = "system.error";
 	
 	public static final String KEY_ERROR_MESSAGE = "system.error";
-	public static final String KEY_RESULTS = "list";	
+	public static final String KEY_RESULTS = "list";
+	
+	public static final String MEMBER_LEVEL = "ROLE_USER";
+	public static final String COMPANY_LEVEL = "ROLE_COMPANY";
+	public static final String MANAGE_LEVEL = "ROLE_MANAGER";
+	public static final String ADMIN_LEVAL = "ROLE_ADMIN";
 }

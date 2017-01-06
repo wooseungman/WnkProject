@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import co.wnk.framework.core.common.Constants;
 import co.wnk.framework.core.security.vo.Role;
 import co.wnk.framework.core.security.vo.User;
 import wnk.com.biz.sample.dao.WNKSampleDao;
@@ -28,9 +29,25 @@ public class SecurityUserService implements UserDetailsService {
 		if(user == null)
 			throw new UsernameNotFoundException("system.notFindUser");
 		
-		Role role = new Role();
-		role.setName(user.getMember_role());
 		List<Role> roles = new ArrayList<Role>();
+		Role role = new Role();
+		switch(Integer.parseInt(user.getMember_class_code())){
+			case 10 : 
+				role.setName(Constants.MEMBER_LEVEL);
+				break;
+			case 30 : 
+				role.setName(Constants.COMPANY_LEVEL);
+				break;
+			case 50 : 
+				role.setName(Constants.MANAGE_LEVEL);
+				break;
+			case 99 : 
+				role.setName(Constants.ADMIN_LEVAL);
+				break;
+			default : 
+				role.setName(Constants.MEMBER_LEVEL);
+				break;
+		}
 		roles.add(role);
 		user.setAuthorities(roles);
 		
