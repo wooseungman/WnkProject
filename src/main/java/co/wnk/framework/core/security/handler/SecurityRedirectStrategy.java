@@ -1,3 +1,6 @@
+/**
+ * @author skycow79
+ */
 package co.wnk.framework.core.security.handler;
 
 import java.io.IOException;
@@ -13,15 +16,13 @@ import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.util.StringUtils;
 
-import co.wnk.framework.core.security.vo.User;
-
 public class SecurityRedirectStrategy {
 	
-	private RequestCache requestCache = new HttpSessionRequestCache();
-	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
-	private String targetUrlParameter;
-	private String defaultUrl;
-	private boolean useReferer;
+	protected RequestCache requestCache = new HttpSessionRequestCache();
+	protected RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+	protected String targetUrlParameter;
+	protected String defaultUrl;
+	protected boolean useReferer;
 	
 	public SecurityRedirectStrategy(){
 		targetUrlParameter = "";
@@ -29,23 +30,29 @@ public class SecurityRedirectStrategy {
 		useReferer = false;
 	}
 	
+	public SecurityRedirectStrategy(String targetUrlParameter, String defaultUrl, boolean useReferer){
+		this.targetUrlParameter = targetUrlParameter;
+		this.defaultUrl = defaultUrl;
+		this.useReferer = useReferer;
+	}
+	
 	public void sendRedirecUrl(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException{
-		switch(decideRedirectStrategy(request, response ,authentication)){
+		switch(sendRedirectStrategy(request, response)){
 		case 1:
-			useTargetUrl(request, response, authentication);
+			useTargetUrl(request, response, null);
 			break;
 		case 2:
-			useSessionUrl(request, response, authentication);
+			useSessionUrl(request, response, null);
 			break;
 		case 3:
-			useRefererUrl(request, response, authentication);
+			useRefererUrl(request, response, null);
 			break;
 		default:
-			useDefaultUrl(request, response, authentication);
+			useDefaultUrl(request, response, null);
 		}
 	}
 	
-	private int decideRedirectStrategy(HttpServletRequest request, HttpServletResponse response, Authentication authentication){
+	protected int sendRedirectStrategy(HttpServletRequest request, HttpServletResponse response){
 		int result = 0;
 		SavedRequest savedRequest = requestCache.getRequest(request, response);
 		
@@ -82,35 +89,36 @@ public class SecurityRedirectStrategy {
 		return result;
 	}
 	
-	private String addParamterLanguageCode(String targetUrl, Authentication authentication){
-		User user = (User) authentication.getPrincipal();
-		
-		if(user.getLanguage_code() != null && !user.getLanguage_code().equals("")){
+	protected String addParamterStr(String targetUrl, String sendParamStr){
+		if(sendParamStr != null && !sendParamStr.equals("")){
 			targetUrl = targetUrl.indexOf("?") == -1 ? 
-					targetUrl + "?lang=" + user.getLanguage_code() : targetUrl + "&lang=" + user.getLanguage_code();
+					targetUrl + "?" + sendParamStr : targetUrl + "&" + sendParamStr;
 		}
-		
 		return targetUrl;
 	}
 	
-	private void useTargetUrl(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException{
+	protected void useTargetUrl(HttpServletRequest request, HttpServletResponse response, String sendParamStr) throws IOException{
 		SavedRequest savedRequest = requestCache.getRequest(request, response);
 		if(savedRequest != null)
 			requestCache.removeRequest(request, response);
-		redirectStrategy.sendRedirect(request, response, this.addParamterLanguageCode(request.getParameter(targetUrlParameter), authentication));
+		
+		sendRedirect(request, response, request.getParameter(targetUrlParameter), sendParamStr);
 	}
 	
-	private void useSessionUrl(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException{
-		SavedRequest savedRequest = requestCache.getRequest(request, response);
-		redirectStrategy.sendRedirect(request, response, this.addParamterLanguageCode(savedRequest.getRedirectUrl(), authentication));
+	protected void useSessionUrl(HttpServletRequest request, HttpServletResponse response, String sendParamStr) throws IOException{
+		sendRedirect(request, response, requestCache.getRequest(request, response).getRedirectUrl(), sendParamStr);
 	}
 	
-	private void useRefererUrl(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException{
-		redirectStrategy.sendRedirect(request, response, this.addParamterLanguageCode(request.getHeader("REFERER"), authentication));
+	protected void useRefererUrl(HttpServletRequest request, HttpServletResponse response, String sendParamStr) throws IOException{
+		sendRedirect(request, response, request.getHeader("REFERER"), sendParamStr);
 	}
 	
-	private void useDefaultUrl(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException{
-		redirectStrategy.sendRedirect(request, response, this.addParamterLanguageCode(defaultUrl, authentication));
+	protected void useDefaultUrl(HttpServletRequest request, HttpServletResponse response, String sendParamStr) throws IOException{
+		sendRedirect(request, response, defaultUrl, sendParamStr);
+	}
+	
+	protected void sendRedirect(HttpServletRequest request, HttpServletResponse response, String url, String sendParamStr) throws IOException{
+		redirectStrategy.sendRedirect(request, response, addParamterStr(url, sendParamStr));
 	}
 	
 	public String getTargetUrlParameter() {
