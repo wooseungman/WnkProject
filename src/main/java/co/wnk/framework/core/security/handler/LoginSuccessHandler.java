@@ -25,20 +25,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 		clearAuthenticationAttributes(request);
 		HttpSession session = request.getSession(false);
 		session.setAttribute("memberInfo", authentication.getPrincipal());
-		
-		switch(strategy.decideRedirectStrategy(request, response)){
-			case 1:
-				strategy.useTargetUrl(request, response, authentication.getPrincipal());
-				break;
-			case 2:
-				strategy.useSessionUrl(request, response, authentication.getPrincipal());
-				break;
-			case 3:
-				strategy.useRefererUrl(request, response, authentication.getPrincipal());
-				break;
-			default:
-				strategy.useDefaultUrl(request, response, authentication.getPrincipal());
-		}
+		strategy.sendRedirecUrl(request, response, authentication);
 	}
 	
 	private void clearAuthenticationAttributes(HttpServletRequest request) {

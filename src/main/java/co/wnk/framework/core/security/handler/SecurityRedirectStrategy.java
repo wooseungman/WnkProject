@@ -4,11 +4,10 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
-import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
@@ -30,7 +29,23 @@ public class SecurityRedirectStrategy {
 		useReferer = false;
 	}
 	
-	public int decideRedirectStrategy(HttpServletRequest request, HttpServletResponse response){
+	public void sendRedirecUrl(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException{
+		switch(decideRedirectStrategy(request, response ,authentication)){
+		case 1:
+			useTargetUrl(request, response, authentication);
+			break;
+		case 2:
+			useSessionUrl(request, response, authentication);
+			break;
+		case 3:
+			useRefererUrl(request, response, authentication);
+			break;
+		default:
+			useDefaultUrl(request, response, authentication);
+		}
+	}
+	
+	private int decideRedirectStrategy(HttpServletRequest request, HttpServletResponse response, Authentication authentication){
 		int result = 0;
 		SavedRequest savedRequest = requestCache.getRequest(request, response);
 		
@@ -67,33 +82,35 @@ public class SecurityRedirectStrategy {
 		return result;
 	}
 	
-	private String addParamterLanguageCode(String targetUrl, Object obj){
-		User userDetail =  (User) obj;
-		if(userDetail.getLanguage_code() != null && !userDetail.getLanguage_code().equals("")){
+	private String addParamterLanguageCode(String targetUrl, Authentication authentication){
+		User user = (User) authentication.getPrincipal();
+		
+		if(user.getLanguage_code() != null && !user.getLanguage_code().equals("")){
 			targetUrl = targetUrl.indexOf("?") == -1 ? 
-					targetUrl + "?lang=" + userDetail.getLanguage_code() : targetUrl + "&lang=" + userDetail.getLanguage_code();
+					targetUrl + "?lang=" + user.getLanguage_code() : targetUrl + "&lang=" + user.getLanguage_code();
 		}
+		
 		return targetUrl;
 	}
 	
-	public void useTargetUrl(HttpServletRequest request, HttpServletResponse response, Object user) throws IOException{
+	private void useTargetUrl(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException{
 		SavedRequest savedRequest = requestCache.getRequest(request, response);
 		if(savedRequest != null)
 			requestCache.removeRequest(request, response);
-		redirectStrategy.sendRedirect(request, response, this.addParamterLanguageCode(request.getParameter(targetUrlParameter), user));
+		redirectStrategy.sendRedirect(request, response, this.addParamterLanguageCode(request.getParameter(targetUrlParameter), authentication));
 	}
 	
-	public void useSessionUrl(HttpServletRequest request, HttpServletResponse response, Object user) throws IOException{
+	private void useSessionUrl(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException{
 		SavedRequest savedRequest = requestCache.getRequest(request, response);
-		redirectStrategy.sendRedirect(request, response, this.addParamterLanguageCode(savedRequest.getRedirectUrl(), user));
+		redirectStrategy.sendRedirect(request, response, this.addParamterLanguageCode(savedRequest.getRedirectUrl(), authentication));
 	}
 	
-	public void useRefererUrl(HttpServletRequest request, HttpServletResponse response, Object user) throws IOException{
-		redirectStrategy.sendRedirect(request, response, this.addParamterLanguageCode(request.getHeader("REFERER"), user));
+	private void useRefererUrl(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException{
+		redirectStrategy.sendRedirect(request, response, this.addParamterLanguageCode(request.getHeader("REFERER"), authentication));
 	}
 	
-	public void useDefaultUrl(HttpServletRequest request, HttpServletResponse response, Object user) throws IOException{
-		redirectStrategy.sendRedirect(request, response, this.addParamterLanguageCode(defaultUrl, user));
+	private void useDefaultUrl(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException{
+		redirectStrategy.sendRedirect(request, response, this.addParamterLanguageCode(defaultUrl, authentication));
 	}
 	
 	public String getTargetUrlParameter() {
