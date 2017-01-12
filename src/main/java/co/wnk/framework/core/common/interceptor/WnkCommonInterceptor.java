@@ -79,9 +79,9 @@ public class WnkCommonInterceptor extends HandlerInterceptorAdapter {
 		}
 		
 		System.out.println("--------------------------------------- EXECUTE INFORMATION -------------------------------------------");
-		System.out.println("|         PARAM INFORMATION 	: 	" + param);
-	    System.out.println("|         URL INFORMATION 	: 	" + request.getRequestURL());
-	    System.out.println("|  CONTROLLER IRNFORMATION 	: 	" + handler.toString());
+		System.out.println("|         PARAM INFORMATION 		: 	" + param);
+	    System.out.println("|         URL INFORMATION 			: 	" + request.getRequestURL());
+	    System.out.println("|         CONTROLLER INFORMATION 	: 	" + handler.toString());
 	    if (viewName != null)
 	    	System.out.println("|         JSP INFORMATION 	: 	" + viewName + ".jsp");
 	    System.out.println("|          CLIENT BROWSER 	: 	" + request.getHeader("User-Agent"));

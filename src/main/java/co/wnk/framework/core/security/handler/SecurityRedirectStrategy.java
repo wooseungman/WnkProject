@@ -1,6 +1,3 @@
-/**
- * @author skycow79
- */
 package co.wnk.framework.core.security.handler;
 
 import java.io.IOException;

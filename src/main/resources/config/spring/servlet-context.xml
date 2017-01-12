@@ -53,7 +53,6 @@
 	<bean id="message" class="co.wnk.framework.core.common.util.message.WnkMessageProperty">
         <property name="messageSourceAccessor" ref="messageSourceAccessor"/>
     </bean>
-    
 	
 	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
 		<property name="defaultLocale" value="ko" />
@@ -87,6 +86,11 @@
 		<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
 			<property name="paramName" value="lang" />
     	</bean>
+    	
+    	<bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor"/>
+     	<bean class="org.springframework.mobile.device.switcher.SiteSwitcherHandlerInterceptor" factory-method="urlPath">
+			<constructor-arg value="/mobile"/>
+     	</bean>
 	</mvc:interceptors>
 	
 	<!-- EXCEL DOWNLOAD -->

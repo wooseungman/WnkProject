@@ -67,25 +67,25 @@ public class AsyncResponseMap  extends HashMap {
 	
 	@SuppressWarnings("unchecked")
 	public AsyncResponseMap setSaveOkMessage(){
-		super.put(Constants.MSG_FOR_ALERT,WnkMessageProperty.getMessage(Constants.saveOk) );
+		super.put(Constants.MSG_FOR_ALERT,WnkMessageProperty.getMessage(Constants.saveOk));
 		return this;
 	}
 
 	@SuppressWarnings("unchecked")
 	public AsyncResponseMap setModifyOkMessage(){
-		super.put(Constants.MSG_FOR_ALERT,WnkMessageProperty.getMessage(Constants.modifyOk) );
+		super.put(Constants.MSG_FOR_ALERT,WnkMessageProperty.getMessage(Constants.modifyOk));
 		return this;
 	}
 
 	@SuppressWarnings("unchecked")
 	public AsyncResponseMap setDeleteOkMessage(){
-		super.put(Constants.MSG_FOR_ALERT,WnkMessageProperty.getMessage(Constants.deleteOk) );
+		super.put(Constants.MSG_FOR_ALERT,WnkMessageProperty.getMessage(Constants.deleteOk));
 		return this;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public AsyncResponseMap setErrorMessage(){
-		super.put(Constants.MSG_FOR_ALERT,WnkMessageProperty.getMessage(Constants.error) );
+		super.put(Constants.MSG_FOR_ALERT,WnkMessageProperty.getMessage(Constants.error));
 		return this;
 	}
 }

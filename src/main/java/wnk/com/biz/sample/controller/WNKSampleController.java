@@ -42,9 +42,11 @@ public class WNKSampleController {
 	 * @param model
 	 * @throws Exception 
 	 */
-	@RequestMapping(value = "/sample/sampleMain.mvc")
+	@RequestMapping(value = {"/sample/sampleMain.mvc", "/mobile/sample/sampleMain.mvc"})
 	public void sampleMain(Map<String,Object> paramMap, ModelMap model,Locale locale) throws Exception {
-	
+		System.out.println("***********************************************************");
+		System.out.println("WEB");
+		System.out.println("***********************************************************");
 	}
 	
 	/**
