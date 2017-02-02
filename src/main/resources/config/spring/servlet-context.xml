@@ -58,7 +58,26 @@
 		<property name="defaultLocale" value="ko" />
 	</bean>
 
-    <mvc:annotation-driven />
+    <mvc:annotation-driven>
+    	<mvc:message-converters register-defaults="true">
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+	                   <value>text/html;charset=UTF-8</value>
+	                   <value>application/xml;charset=UTF-8</value>
+	               	</list>
+	           	</property>
+	       	</bean>
+	       	<bean id="mappingJackson2HttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        		<property name="supportedMediaTypes">
+            		<list>
+                		<value>text/html;charset=UTF-8</value>
+                		<value>application/json;charset=UTF-8</value>
+            		</list>
+        		</property>
+    		</bean>            
+	   	</mvc:message-converters>
+    </mvc:annotation-driven>
 
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/view/"/>
