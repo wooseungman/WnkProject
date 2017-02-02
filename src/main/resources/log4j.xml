@@ -16,7 +16,8 @@
 	</logger>
 	
 	<!-- 3rdparty Loggers -->
-	<logger name="org.springframework.core">
+	
+	<!-- <logger name="org.springframework.core">
 		<level value="info" />
 	</logger>
 	
@@ -30,12 +31,12 @@
 
 	<logger name="org.springframework.web">
 		<level value="info" />
-	</logger>
+	</logger> -->
 	
-	<logger name="jdbc.resultsettable" additivity="false">
+	<!-- <logger name="jdbc.resultsettable" additivity="false">
 	    <level value="debug"/>
 	    <appender-ref ref="console"/>
-	</logger>
+	</logger> -->
 	
 	<logger name="jdbc.sqlonly" additivity="false">  
         <level value="debug"/>  

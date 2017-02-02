@@ -19,7 +19,7 @@
 		AND B.DEL_CD = 'N'
 		WHERE 1=1
 		<if test="SEARCH_VALUE != null">
-			AND A.ID LIKE '%${SEARCH_VALUE}%'
+			AND A.ID = #{SEARCH_VALUE}
 		</if>
 		<if test="SEQ != null">
 			AND A.SEQ = #{SEQ}

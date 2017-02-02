@@ -19,11 +19,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import co.wnk.framework.core.Exception.WnkException;
 import co.wnk.framework.core.common.AsyncResponseMap;
 import co.wnk.framework.core.common.Constants;
 import co.wnk.framework.core.common.util.WnkExcelUtil;
 import co.wnk.framework.core.common.util.WnkStringUtil;
 import co.wnk.framework.core.common.util.message.WnkMessageProperty;
+import co.wnk.framework.core.dao.vo.WnkRowBounds;
 import wnk.com.biz.common.service.FileUploadService;
 import wnk.com.biz.sample.service.WNKSampleService;
 
@@ -56,7 +58,7 @@ public class WNKSampleController {
 	 */
 	@RequestMapping(value = "/sample/sampleBoard/boardList.mvc")
 	public void sambleBoardList(Map<String,Object> paramMap, ModelMap model) {
-		model.put(Constants.KEY_RESULTS, service.getPagedList(paramMap));
+		model.put(Constants.KEY_RESULTS, service.getLimitList(paramMap,new WnkRowBounds(5)));
 	}
 	
 	/**
@@ -229,4 +231,18 @@ public class WNKSampleController {
 			System.out.println("code : " + e.nextElement());
 		}
 	}
+	
+	@RequestMapping(value = "/sample/exception/exceptionTest.mvc")
+    public void ExceptionTest(Map<String,Object> paramMap, ModelMap model) {
+    
+    }
+    
+    @RequestMapping(value = "/sample/exception/exceptionError.mvc")
+    public void ExcepitonError() throws WnkException{
+        try{
+            int test = 1/0;
+        }catch(Exception e){
+            throw new WnkException("system.error");
+        }
+    }
 }

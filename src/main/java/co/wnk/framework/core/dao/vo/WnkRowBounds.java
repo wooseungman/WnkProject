@@ -16,6 +16,14 @@ public class WnkRowBounds extends RowBounds{
 	public int ROW_START = 0;
 	public int ROW_END = 0;
 	
+	public WnkRowBounds(){
+		 
+	}
+	
+	public WnkRowBounds(int pageSize){
+		this.ROW_OFF_SET = pageSize; 
+	}
+	
 	public RowBounds getRowBounds(){
 		ServletRequestAttributes requestAttributes = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes());
         HttpServletRequest request = requestAttributes.getRequest();

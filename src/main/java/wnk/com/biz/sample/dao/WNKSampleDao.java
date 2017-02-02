@@ -49,4 +49,8 @@ public class WNKSampleDao {
     public List<?> selectPagedList(String queryId, Object params){
     	return sqlSession.selectList(queryId, params, new WnkRowBounds().getRowBounds());
     }
+    
+    public List<?> selectPagedLimitList(String queryId, Object params, WnkRowBounds rowBounds){
+    	return sqlSession.selectList(queryId, params, rowBounds.getRowBounds());
+    }
 }

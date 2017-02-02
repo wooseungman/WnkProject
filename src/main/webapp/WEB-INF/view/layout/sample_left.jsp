@@ -49,6 +49,11 @@
 				<a href='<c:url value="/sample/js/sampleScriptForm.mvc" />'>7. 그 밖에 스크립트</a>
 			</td>
 		</tr>
+		<tr>
+			<td class="board_content al pl5">
+				<a href='<c:url value="/sample/exception/exceptionTest.mvc" />'>8. Exception 처리</a>
+			</td>
+		</tr>
 		</table>
 	</td>
 </tr>

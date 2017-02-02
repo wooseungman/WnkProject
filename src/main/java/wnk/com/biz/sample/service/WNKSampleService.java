@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import co.wnk.framework.core.dao.vo.WnkRowBounds;
 import wnk.com.biz.common.service.FileUploadService;
 import wnk.com.biz.sample.dao.WNKSampleDao;
 
@@ -21,6 +22,10 @@ public class WNKSampleService {
 	
 	public List<?> getPagedList(Map<String,Object> paramMap){
 		return dao.selectPagedList("sample.selectSampleList", paramMap);
+	}
+	
+	public List<?> getLimitList(Map<String,Object> paramMap, WnkRowBounds rowBounds){
+		return dao.selectPagedLimitList("sample.selectSampleList", paramMap, rowBounds);
 	}
 	
 	public List<?> getList(Map<String,Object> paramMap){
