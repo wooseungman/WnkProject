@@ -6,8 +6,15 @@ import java.sql.Clob;
 import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.text.StringCharacterIterator;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class WnkStringUtil {
 	
@@ -376,5 +383,22 @@ public class WnkStringUtil {
 	public static String getSequence() {
 		UUID uuid = UUID.randomUUID();
 		return uuid.toString();
+	}
+	
+	public static String getObjectToJsonString(Object obj) throws JsonProcessingException{
+		ObjectMapper mapper = new ObjectMapper();
+		return obj != null ? mapper.writeValueAsString(obj) : null;  
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static Map<String, String> getJsonStringToMap(String str) throws IOException{
+		ObjectMapper mapper = new ObjectMapper();
+		return (str != null ? (Map<String, String>) mapper.readValue(str, new TypeReference<HashMap<String, String>>() {}) : null);  
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static List<Map<String, String>> getJsonStringToList(String str) throws IOException{
+		ObjectMapper mapper = new ObjectMapper();
+		return (str != null ? (List<Map<String, String>>) mapper.readValue(str, new TypeReference<ArrayList<HashMap<String, String>>>() {}) : null);  
 	}
 }

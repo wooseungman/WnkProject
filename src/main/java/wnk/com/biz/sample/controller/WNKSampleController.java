@@ -12,7 +12,8 @@ import org.apache.commons.collections.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,9 +47,6 @@ public class WNKSampleController {
 	 */
 	@RequestMapping(value = {"/sample/sampleMain.mvc", "/mobile/sample/sampleMain.mvc"})
 	public void sampleMain(Map<String,Object> paramMap, ModelMap model,Locale locale) throws Exception {
-		System.out.println("***********************************************************");
-		System.out.println("WEB");
-		System.out.println("***********************************************************");
 	}
 	
 	/**
@@ -138,6 +136,7 @@ public class WNKSampleController {
 	@RequestMapping(value = "/sample/sampleBoard/boardListExcelDown.mvc")
 	public ModelAndView boardListExcelDown(Map<String,Object> paramMap, ModelMap modelMap) {
 		ModelAndView mav = new ModelAndView();
+		@SuppressWarnings("unchecked")
 		List<Map<String, Object>> excelList = (List<Map<String,Object>>) service.getList(paramMap);
 		mav.addObject("fileName", "SampleBaordExcel");
 		mav.addObject("excelColumnLabel", "SEQ|ID|NAME|DESCRIPTION|USE_YN|REG_USER|REG_DATE");
@@ -244,5 +243,12 @@ public class WNKSampleController {
         }catch(Exception e){
             throw new WnkException("system.error");
         }
+    }
+    
+    @RequestMapping(value = "/sample/memberLoginStatus.mvc")
+    public @ResponseBody String memberLoginStatus(Authentication authentication) throws WnkException{
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    	System.out.println("authentication.getPrincipal() : " + auth.getPrincipal());
+    	return auth.getPrincipal() != null && auth.getPrincipal() instanceof String ? "false" : "true";
     }
 }

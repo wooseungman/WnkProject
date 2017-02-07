@@ -2,6 +2,8 @@ package co.wnk.framework.core.security.handler;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
+
+import co.wnk.framework.core.common.util.WnkStringUtil;
 
 public class AccessFailureHandler implements AccessDeniedHandler {
 	
@@ -35,7 +39,7 @@ public class AccessFailureHandler implements AccessDeniedHandler {
 
     public void handle(HttpServletRequest request, HttpServletResponse response, 
     		AccessDeniedException exception) throws IOException, ServletException {
-
+    	
     	String error = "true";
     	String message = exception.getMessage();
         String accept = request.getHeader("accept");
@@ -63,16 +67,13 @@ public class AccessFailureHandler implements AccessDeniedHandler {
         } else if( StringUtils.indexOf(accept, "json") > -1 ) {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             response.setCharacterEncoding("UTF-8");
-
-            String data = StringUtils.join(new String[] {
-            	" { \"response\" : {",
-            	" \"error\" : " , error , ", ",
-            	" \"message\" : \"", message , "\" ",
-            	"} } "
-            });
+            response.setContentType( "application/json;charset=UTF-8" );
             
+            Map<String, Object> returnMap = new HashMap<String,Object>();
+            returnMap.put("error", error);
+            returnMap.put("message", message);
             PrintWriter out = response.getWriter();
-            out.print(data);
+            out.print(WnkStringUtil.getObjectToJsonString(returnMap));
             out.flush();
             out.close();
         }

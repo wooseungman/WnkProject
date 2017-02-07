@@ -18,8 +18,16 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#btn_save").on("click",function(){
-		$("#registFrm").submit();
+		//$("#registFrm").submit();
+		
+		common.submit("registFrm",callbackLoginPopup);
 	});
+	
+	var callbackLoginPopup = function(xhr, status, data){
+		alert(xhr);
+		alert(status);
+		alert(data);
+	}
 });
 </script>
 
