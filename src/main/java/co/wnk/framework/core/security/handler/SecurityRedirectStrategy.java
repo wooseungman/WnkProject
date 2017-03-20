@@ -52,35 +52,20 @@ public class SecurityRedirectStrategy {
 	protected int sendRedirectStrategy(HttpServletRequest request, HttpServletResponse response){
 		int result = 0;
 		SavedRequest savedRequest = requestCache.getRequest(request, response);
+		String refererUrl = request.getHeader("REFERER");
+
+		if(useReferer && StringUtils.hasText(refererUrl))
+			result = 3;
+		else
+			result = 0;
+		
+		if(savedRequest != null)
+			result = 2;
 		
 		if(!"".equals(targetUrlParameter)){
 			String targetUrl = request.getParameter(targetUrlParameter);
-			if(StringUtils.hasText(targetUrl)){
+			if(StringUtils.hasText(targetUrl))
 				result = 1;
-			}else{
-				if(savedRequest != null){
-					result = 2;
-				}else{
-					String refererUrl = request.getHeader("REFERER");
-					if(useReferer && StringUtils.hasText(refererUrl)){
-						result = 3;
-					}else{
-						result = 0;
-					}
-				}
-			}
-		}
-		
-		if(savedRequest != null){
-			result = 2;
-			return result;
-		}
-		
-		String refererUrl = request.getHeader("REFERER");
-		if(useReferer && StringUtils.hasText(refererUrl)){
-			result = 3;
-		}else{
-			result = 0;
 		}
 		
 		return result;

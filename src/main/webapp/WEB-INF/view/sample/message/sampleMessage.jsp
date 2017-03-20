@@ -26,7 +26,7 @@ $(document).ready(function(){
 		<tr height="30">
 			<td class="board_title">Custom Tag</td>
 			<td class="board_content al pl5">
-				<app:message messageCode="hello" />
+				<app:message messageCode="hello1" />
 			</td>
 		</tr>
 		</table><br/>

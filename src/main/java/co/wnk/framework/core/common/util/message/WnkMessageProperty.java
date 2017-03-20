@@ -20,11 +20,21 @@ private static MessageSourceAccessor message = null;
     }
 	
 	public static String getMessage(String key){
-		return message.getMessage(key, defaultLocale);
+		try{
+			return message.getMessage(key, defaultLocale);
+		}catch(Exception e){
+			e.printStackTrace();
+			return "";
+		}
 	}
 	
 	public static String getMessage(String key, Object[] args) {
-		return message.getMessage(key, args, getLocale().getLanguage());
+		try{
+			return message.getMessage(key, args, getLocale().getLanguage());
+		}catch(Exception e){
+			e.printStackTrace();
+			return "";
+		}
     }
 	
 	public static Locale getLocale(){

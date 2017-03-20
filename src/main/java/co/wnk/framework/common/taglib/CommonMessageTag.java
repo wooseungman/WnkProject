@@ -17,9 +17,9 @@ public class CommonMessageTag  extends RequestContextAwareTag {
 		String returnMessage = null;
 		JspWriter out = pageContext.getOut();
 		if(args != null && args.length > 0 && messageCode != null && !messageCode.equals("")){
-			returnMessage =WnkMessageProperty.getMessage(messageCode, args);
+			returnMessage = WnkMessageProperty.getMessage(messageCode, args);
 		}else if(messageCode != null && !messageCode.equals("")){
-			returnMessage =WnkMessageProperty.getMessage(messageCode);
+			returnMessage = WnkMessageProperty.getMessage(messageCode);
 		}
 		
 		out.print(returnMessage);
