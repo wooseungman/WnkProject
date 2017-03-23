@@ -34,17 +34,14 @@ public class WnkAutoPagingInterceptor implements Interceptor {
 	public Object intercept(Invocation invocation) throws Throwable {
     	
     	StatementHandler handler = (StatementHandler)invocation.getTarget();
-    	Map<String,Object> paramMap = (Map<String, Object>) (handler.getParameterHandler().getParameterObject() != null ? handler.getParameterHandler().getParameterObject() : "");
-    	
     	StatementHandler statementHandler = (StatementHandler) invocation.getTarget();
 		MetaObject metaStatementHandler =  MetaObject.forObject(statementHandler, new DefaultObjectFactory(), new DefaultObjectWrapperFactory());
 		Configuration configuration = (Configuration)metaStatementHandler.getValue("delegate.configuration");
 		
 		RowBounds rowBounds = (RowBounds) metaStatementHandler.getValue("delegate.rowBounds");
-		if (rowBounds == null || rowBounds == RowBounds.DEFAULT) {
-			return invocation.proceed();
-		}
+		if (rowBounds == null || rowBounds == RowBounds.DEFAULT) return invocation.proceed();
 		
+		Map<String,Object> paramMap = (Map<String, Object>) (handler.getParameterHandler().getParameterObject() != null ? handler.getParameterHandler().getParameterObject() : "");
 		ServletRequestAttributes requestAttributes = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes());
         HttpServletRequest request = requestAttributes.getRequest();
 		
