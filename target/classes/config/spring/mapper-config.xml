@@ -16,7 +16,7 @@
     </settings>
  
     <typeHandlers>
-		<typeHandler handler="wnk.com.common.interceptor.MybatisObjectHandler" javaType="java.lang.Object"/>
+		<typeHandler handler="co.wnk.framework.core.dao.handler.WnkDaoObjectHandler" javaType="java.lang.Object"/>
 	</typeHandlers>
  
 </configuration>

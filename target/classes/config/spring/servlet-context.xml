@@ -5,34 +5,118 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:security="http://www.springframework.org/schema/security"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+		http://www.springframework.org/schema/security
+    	http://www.springframework.org/schema/security/spring-security.xsd">
 
-    <context:component-scan base-package="wnk.com.biz" use-default-filters="false">
+	<security:global-method-security secured-annotations="enabled" pre-post-annotations="enabled" />	
+	
+	<context:component-scan base-package="wnk.com.biz" use-default-filters="false">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
+	
+	<context:component-scan base-package="co.wnk.framework" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	
+	<!-- <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames" value="message/messages"/>
+	</bean> -->
+	
+	<!-- filedownload -->
+	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<property name="order" value="0"/>
+	</bean>
+	
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+        	<list>
+            	<!-- <value>/WEB-INF/messages/message</value> -->
+            	<value>classpath:messages/message</value>
+        	</list>
+    	</property>
+		<property name="defaultEncoding" value="UTF-8"/>
+		<property name="cacheSeconds" value="5"/>
+	</bean>    
+	
+	<bean id="messageSourceAccessor" class="org.springframework.context.support.MessageSourceAccessor">
+        <constructor-arg ref="messageSource"/>
+    </bean>
+	
+	<bean id="message" class="co.wnk.framework.core.common.util.message.WnkMessageProperty">
+        <property name="messageSourceAccessor" ref="messageSourceAccessor"/>
+    </bean>
+	
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		<property name="defaultLocale" value="ko" />
+	</bean>
 
-    <mvc:annotation-driven />
+    <mvc:annotation-driven>
+    	<mvc:message-converters register-defaults="true">
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+	                   <value>text/html;charset=UTF-8</value>
+	                   <value>application/xml;charset=UTF-8</value>
+	               	</list>
+	           	</property>
+	       	</bean>
+	       	<bean id="mappingJackson2HttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        		<property name="supportedMediaTypes">
+            		<list>
+                		<value>text/html;charset=UTF-8</value>
+                		<value>application/json;charset=UTF-8</value>
+            		</list>
+        		</property>
+    		</bean>            
+	   	</mvc:message-converters>
+    </mvc:annotation-driven>
 
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-	        <property name="prefix" value="/WEB-INF/view/"/>
-	        <property name="suffix" value=".jsp"/>
+		<property name="prefix" value="/WEB-INF/view/"/>
+		<property name="suffix" value=".jsp"/>
 	</bean>
 	
 	<aop:aspectj-autoproxy/>
-	<bean id="wnkParameterAspect" class="wnk.com.common.interceptor.WnkParameterAspect" />
+	
+	<bean id="wnkParameterAspect" class="co.wnk.framework.core.common.aspect.WnkParameterAspect" />
+	
+	<!--
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver" >
+		<property name="defaultLocale" value="ko" />
+	    <property name="cookieName" value="home-lang"/>   
+	    <property name="cookieMaxAge" value="-1"/>
+	    <property name="cookiePath" value="/"/>
+	</bean>
+ 	-->
 	
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**/*.mvc"/>
-			<bean class="wnk.com.common.interceptor.WnkCommonInterceptor"/>
+			<bean class="co.wnk.framework.core.common.interceptor.WnkCommonInterceptor"/>
 		</mvc:interceptor>
+		<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<property name="paramName" value="lang" />
+    	</bean>
+    	
+    	<bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor"/>
+     	<bean class="org.springframework.mobile.device.switcher.SiteSwitcherHandlerInterceptor" factory-method="urlPath">
+			<constructor-arg value="/mobile"/>
+     	</bean>
 	</mvc:interceptors>
+	
+	<!-- EXCEL DOWNLOAD -->
+	<bean id="excelView" class="co.wnk.framework.core.common.io.WnkExcelView"/>
+	
+	<!-- EXCEL DOWNLOAD -->
+	<bean id="fileDownloadView" class="co.wnk.framework.core.common.io.WnkFileDownloadView"/>
 	
 	<!-- <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
@@ -46,4 +130,40 @@
 	<util:properties id="db" location="classpath:/props/db.properties" />
 	<util:properties id="app" location="classpath:/props/app.properties" />
 	
+	<bean class="co.wnk.framework.core.Exception.resolver.WnkAjaxExceptionResolver">
+        <property name="order" value="1"/>
+        <property name="view">
+            <bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
+        </property>
+    </bean>
+    
+    <bean class="co.wnk.framework.core.Exception.resolver.WnkExceptionResolver">
+        <property name="order" value="2"/>
+    </bean>
+    
+    <bean id="multipartResolver" class="co.wnk.framework.core.fileupload.resolver.WnkCommonsMultipartResolver">
+    	<property name="maxUploadSize" value="52428800"/>
+		<property name="defaultEncoding" value="UTF-8"/>
+		<property name="uploadTempDir" ref="uploadDirResource"/>
+    </bean>
+    
+    <bean id="uploadDirResource" class="org.springframework.core.io.FileSystemResource">
+		 <constructor-arg value="#{app['upload.path']}"/>
+	</bean>
+	
+	<bean id="fileUploadComponent" class="co.wnk.framework.core.fileupload.component.WnkFileUploadComponent">
+        <property name="dao">
+            <bean class="wnk.com.biz.sample.dao.WnkSampleFileUploadServiceDao" />
+        </property>
+        <property name="fileIO">
+            <bean class="co.wnk.framework.core.fileupload.component.FileIO" />
+        </property>
+        <property name="thumnailer">
+            <bean class="co.wnk.framework.core.fileupload.component.ThumnailerComponent" />
+        </property>
+        <property name="defaultUploadPath">
+            <value>#{app['upload.path']}</value>
+        </property>
+        
+    </bean>
 </beans>

@@ -161,5 +161,9 @@
         <property name="thumnailer">
             <bean class="co.wnk.framework.core.fileupload.component.ThumnailerComponent" />
         </property>
+        <property name="defaultUploadPath">
+            <value>#{app['upload.path']}</value>
+        </property>
+        
     </bean>
 </beans>

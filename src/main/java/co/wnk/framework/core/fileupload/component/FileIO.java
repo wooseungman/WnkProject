@@ -21,12 +21,12 @@ public class FileIO {
 	public static final String SAVED_FILE_NAME = "fileNameToSave";
 	public static final String SAVED_FILE_SIZE = "fileSizeToSave";
 	
-	public Map<String,Object> saveFile(MultipartFile file) throws Exception{
+	public Map<String,Object> saveFile(MultipartFile file, String uploadPath) throws Exception{
 		String fileNameOri =file.getOriginalFilename();
 		String fileSize = file.getSize()+"";
 		String fileNameExt = fileNameOri.lastIndexOf(".") != -1 ? fileNameOri.substring(fileNameOri.lastIndexOf(".")+1).toLowerCase() : "";
 		String fileNameToSave = WnkDateUtil.getToday() + System.currentTimeMillis() +"."+ fileNameExt;
-		File uploadFile = new File(ApplicationProperty.get("upload.path"),fileNameToSave);		
+		File uploadFile = new File(uploadPath, fileNameToSave);		
 		
 		if(uploadFile.mkdirs() == false)
 			throw new AuthenticationException(WnkMessageProperty.getMessage("F004"));

@@ -4,16 +4,130 @@
     
     <select id="selectSampleList" parameterType="java.util.Map" resultType="java.util.HashMap">
         SELECT 
-			 ID
+			 A.SEQ
+			,A.ID
+			,A.NAME
+			,A.DESCRIPTION
+			,A.USE_YN
+			,A.REG_USER
+			,A.REG_DATE
+			,B.ATTAFILE_GROUP_SEQ AS FILE_SEQ
+			,B.ORGNFILE_NM
+		FROM GBL_BOARD_SAMPLE A
+		LEFT OUTER JOIN GBL_ATTAFILE_INFO B ON
+		A.FILE_SEQ = B.ATTAFILE_GROUP_SEQ
+		AND B.DEL_CD = 'N'
+		WHERE 1=1
+		<if test="SEARCH_VALUE != null">
+			AND A.ID = #{SEARCH_VALUE}
+		</if>
+		<if test="SEQ != null">
+			AND A.SEQ = #{SEQ}
+		</if>
+		ORDER BY A.SEQ DESC
+    </select>
+    
+    <insert id="insertSample" parameterType="java.util.Map">
+		<selectKey resultType="string" keyProperty="SEQ" order="BEFORE">
+        	SELECT IFNULL(MAX(SEQ),0)+1 FROM GBL_BOARD_SAMPLE        
+    	</selectKey>
+        INSERT INTO GBL_BOARD_SAMPLE (
+        	 SEQ
+        	,ID
 			,NAME
 			,DESCRIPTION
 			,USE_YN
+			,FILE_SEQ
 			,REG_USER
-		FROM SAMPLE
+			,REG_DATE
+        ) VALUES (
+        	 #{SEQ}
+        	,#{ID}
+			,#{NAME}
+			,#{DESCRIPTION}
+			,#{USE_YN}
+			,#{FILE_SEQ}
+			,#{REG_USER}
+			,NOW()
+        )
+    </insert>
+    
+    <update id="updateSample" parameterType="java.util.Map">
+    	UPDATE GBL_BOARD_SAMPLE SET
+    		 ID = #{ID}
+    		,NAME = #{NAME}
+    		,DESCRIPTION = #{DESCRIPTION}
+    		,USE_YN = #{USE_YN}
+    		<if test="FILE_SEQ != null">
+    			,FILE_SEQ = #{FILE_SEQ}
+    		</if>
+    		,REG_USER = #{REG_USER}
+    		,REG_DATE = NOW()
+    	WHERE SEQ = #{SEQ}
+    </update>
+    
+    <delete id="deleteSample" parameterType="java.util.Map">
+    	DELETE FROM GBL_BOARD_SAMPLE WHERE SEQ = #{SEQ}
+    </delete>
+    
+    <insert id="insertMybatis" parameterType="java.util.Map">
+        INSERT INTO mybatis_table (
+        	 title
+        ) VALUES (
+        	 #{title}
+        )
+    </insert>
+    
+    <select id="selectMemberInfo" parameterType="java.util.Map" resultType="co.wnk.framework.core.security.vo.User">
+    	SELECT
+    		 ID
+			,PASSWD
+			,NAME
+			,MEMBER_TYPE_CODE
+			,FIRST_CLASS_CODE
+			,MEMBER_CLASS_CODE
+			,JOIN_TYPE_CODE
+			,BIRTH_DAY
+			,BIRTH_TYPE_CODE
+			,GENDER
+			,PERSONAL_EMAIL
+			,PHONE
+			,MOBILE
+			,ZIPCODE
+			,BASIC_ADDRESS
+			,DETAIL_ADDRESS
+			,BANK_CODE
+			,ACCOUNT_NUMBER
+			,EMAIL_YN
+			,SMS_YN 
+			,IPIN_NUMBER
+			,IPIN_SSN_HASH
+			,JOIN_DATE
+			,JOIN_IP
+			,MOD_DATE
+			,MOD_IP
+			,LOGIN_COUNT
+			,LATEST_LOGIN_DATE
+			,LATEST_LOGIN_IP
+			,FIRST_ORDER_YN
+			,FIRST_ORDER_DATE
+			,POINT
+			,SECEDE_YN
+			,SECEDE_TYPE_CODE
+			,SECEDE_DETAIL
+			,SECEDE_ID
+			,SECEDE_DATE
+			,SECEDE_IP
+			,BROKER_BGMALL_CODE
+			,GROUP_ID
+			,LANGUAGE_CODE
+		FROM GBL_MEMBER
 		WHERE 1=1
-		<if test="SEARCH_VALUE != null">
-			AND ID LIKE '%${SEARCH_VALUE}%'
+		<if test="user_id != null">
+			AND ID = #{user_id}
 		</if>
-		ORDER BY ID DESC
-    </select>
+		<if test="user_nam != null">
+			AND NAME = #{user_nam}
+		</if>
+    </select> 
 </mapper>

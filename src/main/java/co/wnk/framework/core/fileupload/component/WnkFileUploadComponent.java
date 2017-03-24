@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.apache.commons.collections.MapUtils;
 
 import co.wnk.framework.core.common.FileModel;
-import co.wnk.framework.core.common.util.config.ApplicationProperty;
 import co.wnk.framework.core.common.util.file.FileUploadutil;
 import co.wnk.framework.core.fileupload.component.ThumnailerComponent;
 import co.wnk.framework.core.fileupload.dao.WnkFileUploadServiceDao;
@@ -25,6 +24,7 @@ public class WnkFileUploadComponent {
 	private WnkFileUploadServiceDao dao;
 	private FileIO fileIO;
 	private ThumnailerComponent thumnailer;
+	private String defaultUploadPath;
 	
 	public List<MultipartFile> getMultiFileList(String fileName, HttpServletRequest request){
 		List<MultipartFile> fileList = null;
@@ -37,8 +37,20 @@ public class WnkFileUploadComponent {
 		return fileList;
 	}
 	
-	
 	public String uploadFile(Map<String, Object> paramMap, String fileName, HttpServletRequest request) throws Throwable{
+		if(defaultUploadPath != null && !defaultUploadPath.equals(""))
+			return this.upload(paramMap, fileName, request, defaultUploadPath);
+		else return "";
+	}
+	
+	public String uploadFile(Map<String, Object> paramMap, String fileName, HttpServletRequest request, String uploadPath) throws Throwable{
+		if(uploadPath != null && !uploadPath.equals("")) 
+			return this.upload(paramMap, fileName, request, uploadPath);
+		else return "";
+			
+	}
+	
+	private String upload(Map<String, Object> paramMap, String fileName, HttpServletRequest request, String uploadPath) throws Exception{
 		String fileSeq = null;
 		String fileGroupSeq = null;
 		String fileType = null;
@@ -56,13 +68,13 @@ public class WnkFileUploadComponent {
 			System.out.println("fileNameOri : " + fileNameOri);
 			System.out.println("fileNameExt : " + fileNameExt);
 			
-			Map<String, Object> fileMap = fileIO.saveFile(f);
+			Map<String, Object> fileMap = fileIO.saveFile(f, uploadPath);
 			
 			String ATTAFILE_TP = (String)fileMap.get(FileIO.FILE_EXT);
 			String ORGNFILE_NM = (String)fileMap.get(FileIO.ORIGINAL_FILE_NAME);
 			String ATTAFILE_NM = (String)fileMap.get(FileIO.SAVED_FILE_NAME);
 			String ATTAFILE_SIZE = (String)fileMap.get(FileIO.SAVED_FILE_SIZE);
-			String ATTAFILE_PATH = ApplicationProperty.get("upload.path");
+			String ATTAFILE_PATH = uploadPath;
 			
 			fileType = FileUploadutil.getFileType(fileNameExt);
 			
@@ -117,5 +129,9 @@ public class WnkFileUploadComponent {
 
 	public void setThumnailer(ThumnailerComponent thumnailer) {
 		this.thumnailer = thumnailer;
+	}
+
+	public void setDefaultUploadPath(String defaultUploadPath) {
+		this.defaultUploadPath = defaultUploadPath;
 	}
 }
