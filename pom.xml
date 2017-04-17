@@ -176,13 +176,6 @@
 			<scope>runtime</scope>
 		</dependency>
 		
-		<!-- resultsettable -->
-		<dependency>
-		    <groupId>org.lazyluke</groupId>
-		    <artifactId>log4jdbc-remix</artifactId>
-		    <version>0.2.7</version>
-		</dependency>
-		
 		<!-- Hibernate -->
 		<dependency>
 			<groupId>org.hibernate</groupId>

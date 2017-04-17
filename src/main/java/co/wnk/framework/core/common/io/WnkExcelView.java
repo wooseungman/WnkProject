@@ -1,15 +1,11 @@
 package co.wnk.framework.core.common.io;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 import java.util.Date;
 import java.util.StringTokenizer;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
@@ -20,13 +16,10 @@ import org.slf4j.LoggerFactory;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.web.servlet.view.document.AbstractExcelView;
 
 public class WnkExcelView extends AbstractExcelView {

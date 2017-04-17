@@ -1,3 +1,14 @@
+/*********************************************************************
+ * Controller 혹은 Service에서 throw 된 Exception에 대한 메세지 처리
+ * Ajax 통신에서의 Exception을 처리한다.
+ * @author skycow79
+ * <pre>
+ * <b>History</b>
+ *     작성자, 1.0, 2017.04.06 최초작성
+ * </pre>
+ * @version 1.0
+ * @see None
+ *********************************************************************/
 package co.wnk.framework.core.Exception.resolver;
 
 import java.util.HashMap;
@@ -21,9 +32,10 @@ public class WnkAjaxExceptionResolver implements HandlerExceptionResolver,Ordere
 	private int order = Ordered.LOWEST_PRECEDENCE;
 	
 	@Override
-	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object obj, Exception exception) {
+	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response
+			, Object obj, Exception exception) {
 		
-		Map<String,Object> exMap = new HashMap<String,Object>();
+		Map<String,Object> exceptionMessage = new HashMap<String,Object>();
 		String contentType = request.getHeader("Accept");
 		
 		response.setStatus(500);
@@ -35,12 +47,12 @@ public class WnkAjaxExceptionResolver implements HandlerExceptionResolver,Ordere
 		
 		if(exception instanceof WnkException){
 			WnkException ex = (WnkException) exception;
-			exMap.put("MESSAGE",ex.getExceptionMessage());
+			exceptionMessage.put("MESSAGE",ex.getExceptionMessage());
 		}else{
-			exMap.put("MESSAGE",WnkMessageProperty.getMessage(Constants.KEY_ERROR_MESSAGE));
+			exceptionMessage.put("MESSAGE",WnkMessageProperty.getMessage(Constants.KEY_ERROR_MESSAGE));
 		}
 		
-		return new ModelAndView(view, exMap);
+		return new ModelAndView(view, exceptionMessage);
 	}
 
 	public void setView(View view) {

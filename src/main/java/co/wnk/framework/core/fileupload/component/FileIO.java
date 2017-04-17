@@ -9,7 +9,6 @@ import javax.security.sasl.AuthenticationException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import co.wnk.framework.core.common.util.config.ApplicationProperty;
 import co.wnk.framework.core.common.util.message.WnkMessageProperty;
 import co.wnk.framework.core.common.util.WnkDateUtil;
 
