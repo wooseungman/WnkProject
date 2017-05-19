@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import co.wnk.framework.core.Exception.WnkException;
 import co.wnk.framework.core.common.AsyncResponseMap;
 import co.wnk.framework.core.common.Constants;
+import co.wnk.framework.core.common.WnkParamMap;
 import co.wnk.framework.core.common.util.WnkExcelUtil;
 import co.wnk.framework.core.common.util.WnkStringUtil;
 import co.wnk.framework.core.common.util.message.WnkMessageProperty;
@@ -46,7 +47,7 @@ public class WNKSampleController {
 	 * @throws Exception 
 	 */
 	@RequestMapping(value = {"/sample/sampleMain.mvc", "/mobile/sample/sampleMain.mvc"})
-	public void sampleMain(Map<String,Object> paramMap, ModelMap model,Locale locale) throws Exception {
+	public void sampleMain(WnkParamMap paramMap, ModelMap model,Locale locale) throws Exception {
 	}
 	
 	/**
@@ -55,8 +56,8 @@ public class WNKSampleController {
 	 * @param model
 	 */
 	@RequestMapping(value = "/sample/sampleBoard/boardList.mvc")
-	public void sambleBoardList(Map<String,Object> paramMap, ModelMap model) {
-		model.put(Constants.KEY_RESULTS, service.getLimitList(paramMap,new WnkRowBounds(5)));
+	public void sambleBoardList(WnkParamMap paramMap, ModelMap model) {
+		model.put(Constants.KEY_RESULTS, service.getLimitList(paramMap.getMap(),new WnkRowBounds(5)));
 	}
 	
 	/**

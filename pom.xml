@@ -326,6 +326,14 @@
     		<version>3.9</version>
 		</dependency>
 	
+		<!-- @valid 어노페이션을 사용하기 위한 jar -->
+		<dependency>
+    		<groupId>javax.validation</groupId>
+    		<artifactId>validation-api</artifactId>
+    		<version>1.0.0.GA</version>
+		</dependency>
+		
+	
 	</dependencies>
 
 	<!-- Oracle Jdbc repository -->

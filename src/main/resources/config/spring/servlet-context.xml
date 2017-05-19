@@ -59,6 +59,9 @@
 	</bean>
 
     <mvc:annotation-driven>
+    	<mvc:argument-resolvers>
+    		<bean class="co.wnk.framework.core.common.resolver.WnkParameterColleterResolver" />
+    	</mvc:argument-resolvers>
     	<mvc:message-converters register-defaults="true">
 			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
 				<property name="supportedMediaTypes">
