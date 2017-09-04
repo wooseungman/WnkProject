@@ -33,8 +33,13 @@ public class WnkParameterColleterResolver implements HandlerMethodArgumentResolv
 		
 		while(paramIterator.hasNext()){
 			String key = paramIterator.next();
+			System.out.println("resolver key : " + key);
 			String[] values = webRequest.getParameterValues(key);
-			if(values!=null) paramMap.put(key, (values.length > 1) ? values : values[0]);
+			if(values != null){
+				System.out.println("여기서 셋팅 됨???");
+				paramMap.put(key, (values.length > 1) ? values : values[0]);
+			}
+			System.out.println("paramMap123 : " + paramMap);
 		}
 		
 		return paramMap;

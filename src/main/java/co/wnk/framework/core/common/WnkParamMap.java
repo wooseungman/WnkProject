@@ -8,6 +8,7 @@
 package co.wnk.framework.core.common;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -18,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 public class WnkParamMap {
 	private static final Logger logger = LoggerFactory.getLogger(WnkParamMap.class);
-	private Map<String, Object> paramMap = new HashMap<String, Object>();
+	Map<String, Object> paramMap = new HashMap<String, Object>();
 	
 	/***********************************************************
 	 * Key에 해당하는 Value(Object)를 반환한다.
@@ -214,7 +215,7 @@ public class WnkParamMap {
 	 * @param value
 	 ***********************************************************/
 	public void put(String key, Object value){
-		paramMap.put("key", value);
+		paramMap.put(key, value);
 	}
 	
 	/***********************************************************
@@ -273,5 +274,19 @@ public class WnkParamMap {
 	 ***********************************************************/
     public Set<String> keySet(){
         return paramMap.keySet();
+    }
+    
+    /***********************************************************
+     * ParamMap toString
+     ***********************************************************/
+    public String toString(){
+    	String key = null;
+    	StringBuilder sb = new StringBuilder();
+    	Iterator<String> iterator = paramMap.keySet().iterator();
+    	while(iterator.hasNext()){
+    		key = iterator.next();
+    		sb.append(key + " ==> [" + paramMap.get(key).toString() + "] ");
+    	}
+    	return sb.toString();
     }
 }

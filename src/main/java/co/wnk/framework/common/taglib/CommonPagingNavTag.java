@@ -1,3 +1,10 @@
+/****************************************************************
+ * CommonPagingNavTag Class
+ * 페이징 처리를 위한 Custom Tag Library
+ * @author skycow79
+ * @version 1.0
+ * @date 2016.12.22
+ ****************************************************************/
 package co.wnk.framework.common.taglib;
 
 import java.util.Enumeration;
@@ -26,11 +33,11 @@ public class CommonPagingNavTag extends RequestContextAwareTag {
 		return SKIP_BODY;
 	}
 	
-	/**
+	/******************************************************************************
 	 * 페이지 관련 정보를 셋팅한다.
 	 * @param request
 	 * @throws Exception
-	 */
+	 ******************************************************************************/
 	private String setPageInfomation() throws Exception{
 		HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
 		WebApplicationContext wac = getRequestContext().getWebApplicationContext();
@@ -55,16 +62,16 @@ public class CommonPagingNavTag extends RequestContextAwareTag {
 		return this.printPagingNavigation(request);
 	}
 	
-	/**
+	/******************************************************************************
 	 * 입력된 페이지 정보에 따른 페이지 네비게이션을 출력한다.
 	 * @param request
 	 * @return String
-	 */
+	 ******************************************************************************/
 	private String printPagingNavigation(HttpServletRequest request){
 		
-		StringBuffer result = new StringBuffer();
-		StringBuffer url = new StringBuffer();
-		StringBuffer paremeter = new StringBuffer();
+		StringBuilder result = new StringBuilder();
+		StringBuilder url = new StringBuilder();
+		StringBuilder paremeter = new StringBuilder();
 		
 		url.append(request.getAttribute("javax.servlet.forward.request_uri"));
 		Enumeration<?> enumeration = request.getParameterNames();
@@ -77,11 +84,14 @@ public class CommonPagingNavTag extends RequestContextAwareTag {
 			}
 		}
 		
-		if(startPage > pageBlockSize) result.append("<a href='"+url.toString()+"?page="+(startPage-10)+ paremeter.toString() +"'>◁</a>&nbsp;&nbsp;");
+		if(startPage > pageBlockSize)
+			result.append("<a href='"+url.toString()+"?page="+(startPage-10)+ paremeter.toString() +"'>◁</a>&nbsp;&nbsp;");
 		
 		for(int i=startPage;i<=endPage;i++){
-			if(currentPage == i) result.append("<span style='font-weight:bold'>" + i + "</span>&nbsp;"); 
-			else result.append("<a href='"+url.toString()+"?page="+i+ paremeter.toString() +"'>"+i+"</a>&nbsp;");
+			if(currentPage == i)
+				result.append("<span style='font-weight:bold'>" + i + "</span>&nbsp;");
+			else
+				result.append("<a href='"+url.toString()+"?page="+i+ paremeter.toString() +"'>"+i+"</a>&nbsp;");
 			if(i < endPage)result.append(" | ");
 		}
 		

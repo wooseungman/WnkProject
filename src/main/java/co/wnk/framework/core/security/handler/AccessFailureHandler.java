@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
-import co.wnk.framework.core.common.util.WnkStringUtil;
+import co.wnk.framework.core.common.util.WnkStringUtils;
 
 public class AccessFailureHandler implements AccessDeniedHandler {
 	
@@ -73,7 +73,7 @@ public class AccessFailureHandler implements AccessDeniedHandler {
             returnMap.put("error", error);
             returnMap.put("message", message);
             PrintWriter out = response.getWriter();
-            out.print(WnkStringUtil.getObjectToJsonString(returnMap));
+            out.print(WnkStringUtils.getJsonString(returnMap));
             out.flush();
             out.close();
         }

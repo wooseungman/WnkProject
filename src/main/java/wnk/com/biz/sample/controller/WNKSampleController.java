@@ -25,7 +25,7 @@ import co.wnk.framework.core.common.AsyncResponseMap;
 import co.wnk.framework.core.common.Constants;
 import co.wnk.framework.core.common.WnkParamMap;
 import co.wnk.framework.core.common.util.WnkExcelUtil;
-import co.wnk.framework.core.common.util.WnkStringUtil;
+import co.wnk.framework.core.common.util.WnkStringUtils;
 import co.wnk.framework.core.common.util.message.WnkMessageProperty;
 import co.wnk.framework.core.dao.vo.WnkRowBounds;
 import wnk.com.biz.common.service.FileUploadService;
@@ -47,7 +47,8 @@ public class WNKSampleController {
 	 * @throws Exception 
 	 */
 	@RequestMapping(value = {"/sample/sampleMain.mvc", "/mobile/sample/sampleMain.mvc"})
-	public void sampleMain(WnkParamMap paramMap, ModelMap model,Locale locale) throws Exception {
+	public void sampleMain(WnkParamMap paramMap, ModelMap model, Locale locale) throws Exception {
+		System.out.println(paramMap.toString());
 	}
 	
 	/**
@@ -82,9 +83,9 @@ public class WNKSampleController {
 		
 		int deleteCnt = service.removeBoardArticle(paramMap);
 		if(deleteCnt > 0){
-			String returnUrl = "/sample/sampleBoard/boardList.mvc?page="+WnkStringUtil.trim(paramMap.get("page"))
-				+"&SEARCH_GUBUN="+WnkStringUtil.trim(paramMap.get("SEARCH_GUBUN"))+"&SEARCH_VALUE="
-				+WnkStringUtil.trim(paramMap.get("SEARCH_VALUE"));
+			String returnUrl = "/sample/sampleBoard/boardList.mvc?page="+WnkStringUtils.trim(paramMap.get("page"))
+				+"&SEARCH_GUBUN="+WnkStringUtils.trim(paramMap.get("SEARCH_GUBUN"))+"&SEARCH_VALUE="
+				+WnkStringUtils.trim(paramMap.get("SEARCH_VALUE"));
 			
 			return responseMap.setMessage(WnkMessageProperty.getMessage(Constants.deleteOk)).setUrl(returnUrl);
 		}else{
@@ -118,8 +119,8 @@ public class WNKSampleController {
 		
 		if(saveCnt > 0){
 			String returnUrl = "/sample/sampleBoard/boardList.mvc?page="
-					+WnkStringUtil.trim(paramMap.get("page"))+"&SEARCH_GUBUN="+WnkStringUtil.trim(paramMap.get("SEARCH_GUBUN"))+"&SEARCH_VALUE="
-					+WnkStringUtil.trim(paramMap.get("SEARCH_VALUE"));
+					+WnkStringUtils.trim(paramMap.get("page"))+"&SEARCH_GUBUN="+WnkStringUtils.trim(paramMap.get("SEARCH_GUBUN"))+"&SEARCH_VALUE="
+					+WnkStringUtils.trim(paramMap.get("SEARCH_VALUE"));
 			
 			return responseMap.setMessage(WnkMessageProperty.getMessage(Constants.saveOk)).setUrl(returnUrl);
 		}else{

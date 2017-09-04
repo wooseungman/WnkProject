@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import co.wnk.framework.core.common.util.WnkStringUtil;
+import co.wnk.framework.core.common.util.WnkStringUtils;
 
 public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 	
@@ -65,7 +65,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
             returnMap.put("loginFlag", "true");
             returnMap.put("loginInfo", authentication.getPrincipal());
             PrintWriter out = response.getWriter();
-            out.print(WnkStringUtil.getObjectToJsonString(returnMap));
+            out.print(WnkStringUtils.getJsonString(returnMap));
             out.flush();
             out.close();
 		}

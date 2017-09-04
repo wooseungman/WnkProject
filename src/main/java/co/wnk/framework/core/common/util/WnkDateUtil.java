@@ -1,3 +1,10 @@
+/****************************************************************
+ * WnkDateUtil Class
+ * Date 관련 Utility
+ * @author skycow79
+ * @version 1.0
+ * @date 2016.12.22
+ ****************************************************************/
 package co.wnk.framework.core.common.util;
 
 import java.text.ParseException;
@@ -7,290 +14,274 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import org.apache.commons.lang3.StringUtils;
+
+import co.wnk.framework.core.common.util.message.WnkMessageProperty;
+
 public class WnkDateUtil {
 	
-	/**
-	 * Constructor
-	 */
-	private WnkDateUtil() {}
-
-	/**
+	/**********************************************************
+	 * 현재 날짜에서 년도를 가지고 온다.
 	 * @return String
-	 */
+	 **********************************************************/
 	public static String getYear() {
 		return getDateByPattern("yyyy");
 	}
 
-	/**
-	 * @return String
-	 */
+	/**********************************************************
+	 * 현재 날짜에서 월을 가지고 온다.
+	 * @return
+	 **********************************************************/
 	public static String getMonth() {
 		return getDateByPattern("MM");
 	}
 
-	/**
-	 * @return String
-	 */
+	/**********************************************************
+	 * 현재 날짜에서 일을 가지고 온다.
+	 * @return
+	 **********************************************************/
 	public static String getDay() {
 		return getDateByPattern("dd");
 	}
 
-	/**
+	/**********************************************************
+	 * 현재 날짜에서 시간을 가지고 온다.
 	 * @return String
-	 */
+	 **********************************************************/
 	public static String getHour() {
 		return getDateByPattern("HH");
 	}
 
-	/**
+	/**********************************************************
+	 * 현재 날짜에서 분을 가지고 온다.
 	 * @return String
-	 */
+	 **********************************************************/
 	public static String getMinute() {
 		return getDateByPattern("mm");
 	}
 
-	/**
-	 * @return String
-	 */
+	/**********************************************************
+	 * 현재 날짜에서 초를 가지고 온다.
+	 * @return
+	 **********************************************************/
 	public static String getSecond() {
 		return getDateByPattern("ss");
 	}
 
-	/**
-	 * 'yyyyMMdd'
-	 * @return String
-	 */
+	/**********************************************************
+	 * yyyyMMdd 패턴의 현재 날짜를 가지고 온다.
+	 * @return
+	 **********************************************************/
 	public static String getShortDate() {
 		return getDateByPattern("yyyyMMdd");
 	}
 
-	/**
+	/**********************************************************
+	 * yyyyMMddHHmmss 패턴의 현재 날짜 및 시간을 가지고 온다.
 	 * 'yyyyMMddHHmmss'
 	 * @return String
-	 */
+	 **********************************************************/
 	public static String getToday() {
 		return getDateByPattern("yyyyMMddHHmmss");
 	}
 
-	/**
-	 * 'yyyy-MM-dd'
-	 * @return String
-	 */
+	/**********************************************************
+	 * yyyy-MM-dd 패턴의 현재 날짜를 가지고 온다.
+	 * @return
+	 **********************************************************/
 	public static String getDate() {
 		return getDateByPattern("yyyy-MM-dd");
 	}
 
-	/**
-	 * 'HHmmss'
-	 * @return String
-	 */
+	/**********************************************************
+	 * HHmmss 패턴의 현재 시간을 가지고 온다.
+	 * @return
+	 **********************************************************/
 	public static String getShortTime() {
 		return getDateByPattern("HHmmss");
 	}
 
-	/**
-	 * 'HH:mm:ss'
+	/**********************************************************
+	 * HH:mm:ss 패턴의 현재 시간을 가지고 온다.
 	 * @return String
-	 */
+	 **********************************************************/
 	public static String getTime() {
 		return getDateByPattern("HH:mm:ss");
 	}
 
-	/**
+	/**********************************************************
+	 * 현재 날짜의 요일 정보를 가지고 온다.
 	 * @return String
-	 */
+	 **********************************************************/
 	public static String getWeekOfYear() {
 		return getDateByPattern("w");
 	}
 
-	/**
+	/**********************************************************
+	 * 현재 날짜의 요일 정보를 가지고 온다.
 	 * @return String
-	 */
+	 **********************************************************/
 	public static String getWeekOfMonth() {
 		return getDateByPattern("W");
 	}
 
-	/**
-	 * 'yyyy-MM-dd HH:mm:ss'
+	/**********************************************************
+	 * yyyy-MM-dd HH:mm:ss 패턴의 현재 날짜를 가지고 온다.
 	 * @return String
-	 */
+	 **********************************************************/
 	public static String getFullDate() {
 		return getDateByPattern("yyyy-MM-dd HH:mm:ss");
 	}
 
-	/**
+	/**********************************************************
+	 * 입력된 패턴에 따라 현재 날짜를 가지고 온다.
+	 * @param pattern
 	 * @return String
-	 */
+	 **********************************************************/
 	public static String getDateByPattern(String pattern) {
-		java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat(pattern, java.util.Locale.KOREA);
+		java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat(pattern, WnkMessageProperty.getLocale());
 		return formatter.format(new java.util.Date());
 	}
 
-	/**
+	/**********************************************************
+	 * 입력된 패턴과 로케일 설정에 따라 현재 날짜를 가지고 온다.
+	 * @param pattern
+	 * @param locale
 	 * @return String
-	 */
+	 **********************************************************/
 	public static String getDateByPattern(String pattern, Locale locale) {
 		java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat(pattern, locale);
 		return formatter.format(new java.util.Date());
 	}
 
-	/**
-	 * @return int
-	 */
+	/**********************************************************
+	 * 입력된 현재날짜가 속해있는 달의 마지막 날짜를 가지고 온다.
+	 * @param date
+	 * @return String
+	 **********************************************************/
 	public static String getLastDate(String date) {
-		Calendar calendar = Calendar.getInstance();
-
-		int yyyy = Integer.parseInt(date.substring(0, 4));
-		int MM = Integer.parseInt(date.substring(4, 6));
-		int dd = Integer.parseInt(date.substring(6, 8));
-
-		calendar.set(yyyy, MM - 1, dd);
-
-		return String.valueOf(calendar.getActualMaximum(Calendar.DAY_OF_MONTH) < 10 ? "0" + calendar.getActualMaximum(Calendar.DAY_OF_MONTH) : calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+		String result = null;
+		if(WnkStringUtils.isNotEmpty(date)){
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(Integer.parseInt(date.substring(0, 4)), Integer.parseInt(date.substring(4, 6)) - 1, 
+					Integer.parseInt(date.substring(6, 8)));
+			result = String.valueOf(calendar.getActualMaximum(Calendar.DAY_OF_MONTH) < 10 ? 
+					"0" + calendar.getActualMaximum(Calendar.DAY_OF_MONTH) : calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+		}
+		
+		return result;
 	}
 
-	/**
+	/**********************************************************
+	 * 입력된 날짜의 요일 정보를 문자로 리턴한다.
 	 * @param date yyyyMMdd
-	 * @return result
-	 */
+	 * @return String
+	 **********************************************************/
 	public static String getDayOfWeek(String date) {
-		if (date == null) return null;
-
-		int yyyy = 0, MM = 1, dd = 1, day_of_week; // default
 		String days[] = {"월", "화", "수", "목", "금", "토", "일"};
-
-		try {
-			yyyy = Integer.parseInt(date.substring(0, 4));
-			MM = Integer.parseInt(date.substring(4, 6));
-			dd = Integer.parseInt(date.substring(6, 8));
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		String returnStr = null;
+		if(WnkStringUtils.isNotEmpty(date)){
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(WnkStringUtils.substringInt(date, 0, 4), WnkStringUtils.substringInt(date, 4, 6) - 1
+					, WnkStringUtils.substringInt(date, 6, 8));
+			returnStr = days[calendar.get(Calendar.DAY_OF_WEEK) - 1];
 		}
-
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(yyyy, MM - 1, dd);
-		day_of_week = calendar.get(Calendar.DAY_OF_WEEK);
-
-		return days[day_of_week - 1];
+		return returnStr;
 	}
 
-	/**
-	 * getDayOfWeek("20000225") -> 6
-	 * @param date yyyyMMdd
+	/**********************************************************
+	 * 입력된 날짜의 요일 정보를 숫자로 리턴한다.
+	 * @param date
 	 * @return int
-	 */
+	 **********************************************************/
 	public static int getWeekday(String date) {
-		if (date == null) return -1;
-
-		int yyyy = 0, MM = 1, dd = 1, day_of_week; // default
-
-		try {
-			yyyy = Integer.parseInt(date.substring(0, 4));
-			MM = Integer.parseInt(date.substring(4, 6));
-			dd = Integer.parseInt(date.substring(6, 8));
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		int result = -1;
+		if(WnkStringUtils.isNotEmpty(date)){
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(WnkStringUtils.substringInt(date, 0, 4), WnkStringUtils.substringInt(date, 4, 6) - 1
+					, WnkStringUtils.substringInt(date, 6, 8));
+			result = calendar.get(Calendar.DAY_OF_WEEK);
 		}
-
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(yyyy, MM - 1, dd);
-		day_of_week = calendar.get(Calendar.DAY_OF_WEEK);
-
-		return day_of_week;
+		return result;
 	}
 
-	/**
-	 * @param date : yyyyMMdd
-	 * @return
-	 */
+	/**********************************************************
+	 * 입력된 날짜에 대한 주차정보를 리턴한다.
+	 * @param date
+	 * @return int
+	 **********************************************************/
 	public static int getWeekOfMonth(String date) {
-		Calendar calendar = Calendar.getInstance();
-
-		int yyyy = Integer.parseInt(date.substring(0, 4));
-		int MM = Integer.parseInt(date.substring(4, 6));
-		int dd = Integer.parseInt(date.substring(6, 8));
-
-		calendar.set(yyyy, MM - 1, dd);
-
-		return calendar.get(Calendar.WEEK_OF_MONTH);
-	}
-
-	/**
-	 * @param date : yyyyMMdd
-	 * @return
-	 */
-	public static int getTotalWeekOfMonth(String date) {
-		Calendar calendar = Calendar.getInstance();
-
-		int yyyy = Integer.parseInt(date.substring(0, 4));
-		int MM = Integer.parseInt(date.substring(4, 6));
-		int dd = Integer.parseInt(date.substring(6, 8));
-
-		calendar.set(yyyy, MM - 1, dd);
-
-		return calendar.getActualMaximum(Calendar.WEEK_OF_MONTH);
-	}
-
-	/**
-	 * @param date : yyyyMMdd
-	 * @param type : START or END
-	 */
-	public static String getDateOfWeek(String date, String type) {
-		String dateOfWeek = "";
-
-		int START_OF_WEEK = 1;
-		int END_OF_WEEK = 7;
-
-		Calendar sCalendar = Calendar.getInstance();
-
-		int yyyy = Integer.parseInt(date.substring(0, 4));
-		int MM = Integer.parseInt(date.substring(4, 6));
-		int dd = Integer.parseInt(date.substring(6, 8));
-
-		sCalendar.set(yyyy, MM - 1, dd);
-
-		Calendar eCalendar = (Calendar)sCalendar.clone();
-
-		int dayOfWeek = sCalendar.get(Calendar.DAY_OF_WEEK);
-		sCalendar.add(Calendar.DATE, START_OF_WEEK - dayOfWeek); // 占쎌뮇�됵옙遺우뵬占쏙옙占쎌눘�귨옙�곗쨮 筌욑옙��
-		eCalendar.add(Calendar.DATE, END_OF_WEEK - dayOfWeek); // 筌띾뜆占쏙쭕�깆뒄占쎌눘��占쎌쥙�귨옙�곗쨮 筌욑옙��
-
-		if ("START".equalsIgnoreCase(type)) {
-			dateOfWeek = ""
-				+ sCalendar.get(Calendar.YEAR)
-				+ ((sCalendar.get(Calendar.MONTH)+1) < 10 ? "0" + (sCalendar.get(Calendar.MONTH)+1) : (sCalendar.get(Calendar.MONTH)+1))
-				+ (sCalendar.get(Calendar.DATE) < 10 ? "0" + sCalendar.get(Calendar.DATE) : sCalendar.get(Calendar.DATE));
-
-		} else if ("END".equalsIgnoreCase(type)) {
-			dateOfWeek = ""
-				+ eCalendar.get(Calendar.YEAR)
-				+ ((eCalendar.get(Calendar.MONTH)+1) < 10 ? "0" + (eCalendar.get(Calendar.MONTH)+1) : (eCalendar.get(Calendar.MONTH)+1))
-				+ (eCalendar.get(Calendar.DATE) < 10 ? "0" + eCalendar.get(Calendar.DATE) : eCalendar.get(Calendar.DATE));
+		int result = -1;
+		if(WnkStringUtils.isNotEmpty(date)){
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(WnkStringUtils.substringInt(date, 0, 4), WnkStringUtils.substringInt(date, 4, 6) - 1
+					, WnkStringUtils.substringInt(date, 6, 8));
+			result = calendar.get(Calendar.WEEK_OF_MONTH);
 		}
-
-		return dateOfWeek;
+		
+		return result;
 	}
 
-	/**
+	/**********************************************************
+	 * 입력된 날짜가 속한 월의 마지막 날짜를 가지고 온다.
+	 * @param date
+	 * @return int
+	 **********************************************************/
+	public static int getTotalWeekOfMonth(String date) {
+		int result = -1;
+		if(WnkStringUtils.isNotEmpty(date)){
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(WnkStringUtils.substringInt(date, 0, 4), WnkStringUtils.substringInt(date, 4, 6) - 1
+					, WnkStringUtils.substringInt(date, 6, 8));
+			result = calendar.getActualMaximum(Calendar.WEEK_OF_MONTH);
+		}
+		
+		return result;
+	}
+	
+	/**********************************************************
+	 * 입력한 날짜가 속해 있는 달의 시작일자를 리턴한다.
+	 * @param date
 	 * @return
-	 */
+	 **********************************************************/
+	public static String getFirstDate(String date) {
+		Calendar sCalendar = Calendar.getInstance();
+		sCalendar.set(WnkStringUtils.substringInt(date, 0, 4), WnkStringUtils.substringInt(date, 4, 6) - 1
+				, WnkStringUtils.substringInt(date, 6, 8));
+
+		sCalendar.add(Calendar.DATE, 1 - sCalendar.get(Calendar.DAY_OF_WEEK));
+		return String.valueOf(sCalendar.get(Calendar.YEAR)) + ((sCalendar.get(Calendar.MONTH)+1) < 10 ? 
+				"0" + (sCalendar.get(Calendar.MONTH)+1) : (sCalendar.get(Calendar.MONTH)+1)) + (sCalendar.get(Calendar.DATE) < 10 ? 
+				"0" + sCalendar.get(Calendar.DATE) : sCalendar.get(Calendar.DATE));
+	}
+
+	/**********************************************************
+	 * 입력한 날짜가 속해 있는 해당 주간의 시작날짜와 마지막 날짜를 리턴한다.
+	 * @param date
+	 * @return
+	 **********************************************************/
+	public static String[] getDateOfWeek(String date) {
+		String[] day = {getFirstDate(date), getLastDate(date)};
+		return day;
+	}
+
+	/**********************************************************
+	 * 오늘일자의 요일정보를 리턴한다.
+	 * @return
+	 **********************************************************/
 	public static String getDayOfWeek() {
 		return getDayOfWeek(getDate());
 	}
 
-	/**
-	 * AddMonth
-	 * @param date yyyyMMdd
-	 * @param month param
-	 * @return String value
-	 */
+	/**********************************************************
+	 * 입력된 날짜에 입력된 월을 더하여 리턴한다.
+	 * @param date
+	 * @param month
+	 * @return
+	 **********************************************************/
 	public static String getAddMonth(String date, int month) {
-		if (date == null) return null;
-		if (date.length() < 8) return "";
-
-		return getAddDate(date, "yyyyMMdd", "month", month);
+		return WnkStringUtils.isEmpty(date) && date.length() < 8 ? 
+				null : getAddDate(date, "yyyyMMdd", "month", month);
 	}
 
 	/**
@@ -300,11 +291,11 @@ public class WnkDateUtil {
 	 * @param type return
 	 * @return String value
 	 */
-	public static String getAddMonth(String date, int month, String type) {
+	public static String getAddMonth(String date, int month, String patten) {
 		if (date == null) return null;
 		if (date.length() < 8) return "";
 
-		return getAddDate(date, type, "month", month);
+		return getAddDate(date, patten, "month", month);
 	}
 
 	/**

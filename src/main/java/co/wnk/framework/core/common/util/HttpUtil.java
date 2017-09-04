@@ -110,10 +110,10 @@ public class HttpUtil {
 	public static String createParameter(HttpServletRequest request, String[] excludedParameters) {
 		StringBuffer sb = new StringBuffer();
 
-		Enumeration enums = request.getParameterNames();
+		Enumeration<String> enums = request.getParameterNames();
 
 		while (enums.hasMoreElements()) {
-			String paramName = (String) enums.nextElement();
+			String paramName = enums.nextElement();
 
 			if (contains(excludedParameters, paramName) != true) {
 				String[] strs = request.getParameterValues(paramName);
